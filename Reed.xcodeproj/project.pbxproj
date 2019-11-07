@@ -1,0 +1,593 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		9DD9227123749D8B00313210 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DD9227023749D8B00313210 /* AppDelegate.swift */; };
+		9DD9227323749D8B00313210 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DD9227223749D8B00313210 /* SceneDelegate.swift */; };
+		9DD9227523749D8B00313210 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DD9227423749D8B00313210 /* ContentView.swift */; };
+		9DD9227723749D8E00313210 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9DD9227623749D8E00313210 /* Assets.xcassets */; };
+		9DD9227A23749D8E00313210 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9DD9227923749D8E00313210 /* Preview Assets.xcassets */; };
+		9DD9227D23749D8E00313210 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9DD9227B23749D8E00313210 /* LaunchScreen.storyboard */; };
+		9DD9228823749D8E00313210 /* ReedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DD9228723749D8E00313210 /* ReedTests.swift */; };
+		9DD9229323749D8E00313210 /* ReedUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DD9229223749D8E00313210 /* ReedUITests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		9DD9228423749D8E00313210 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9DD9226523749D8B00313210 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9DD9226C23749D8B00313210;
+			remoteInfo = Reed;
+		};
+		9DD9228F23749D8E00313210 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9DD9226523749D8B00313210 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9DD9226C23749D8B00313210;
+			remoteInfo = Reed;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		9DD9226D23749D8B00313210 /* Reed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Reed.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		9DD9227023749D8B00313210 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		9DD9227223749D8B00313210 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		9DD9227423749D8B00313210 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		9DD9227623749D8E00313210 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		9DD9227923749D8E00313210 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		9DD9227C23749D8E00313210 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		9DD9227E23749D8E00313210 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9DD9228323749D8E00313210 /* ReedTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ReedTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		9DD9228723749D8E00313210 /* ReedTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReedTests.swift; sourceTree = "<group>"; };
+		9DD9228923749D8E00313210 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9DD9228E23749D8E00313210 /* ReedUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ReedUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		9DD9229223749D8E00313210 /* ReedUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReedUITests.swift; sourceTree = "<group>"; };
+		9DD9229423749D8E00313210 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		9DD9226A23749D8B00313210 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9DD9228023749D8E00313210 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9DD9228B23749D8E00313210 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		9DD9226423749D8B00313210 = {
+			isa = PBXGroup;
+			children = (
+				9DD9226F23749D8B00313210 /* Reed */,
+				9DD9228623749D8E00313210 /* ReedTests */,
+				9DD9229123749D8E00313210 /* ReedUITests */,
+				9DD9226E23749D8B00313210 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		9DD9226E23749D8B00313210 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				9DD9226D23749D8B00313210 /* Reed.app */,
+				9DD9228323749D8E00313210 /* ReedTests.xctest */,
+				9DD9228E23749D8E00313210 /* ReedUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		9DD9226F23749D8B00313210 /* Reed */ = {
+			isa = PBXGroup;
+			children = (
+				9DD9227023749D8B00313210 /* AppDelegate.swift */,
+				9DD9227223749D8B00313210 /* SceneDelegate.swift */,
+				9DD9227423749D8B00313210 /* ContentView.swift */,
+				9DD9227623749D8E00313210 /* Assets.xcassets */,
+				9DD9227B23749D8E00313210 /* LaunchScreen.storyboard */,
+				9DD9227E23749D8E00313210 /* Info.plist */,
+				9DD9227823749D8E00313210 /* Preview Content */,
+			);
+			path = Reed;
+			sourceTree = "<group>";
+		};
+		9DD9227823749D8E00313210 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				9DD9227923749D8E00313210 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		9DD9228623749D8E00313210 /* ReedTests */ = {
+			isa = PBXGroup;
+			children = (
+				9DD9228723749D8E00313210 /* ReedTests.swift */,
+				9DD9228923749D8E00313210 /* Info.plist */,
+			);
+			path = ReedTests;
+			sourceTree = "<group>";
+		};
+		9DD9229123749D8E00313210 /* ReedUITests */ = {
+			isa = PBXGroup;
+			children = (
+				9DD9229223749D8E00313210 /* ReedUITests.swift */,
+				9DD9229423749D8E00313210 /* Info.plist */,
+			);
+			path = ReedUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		9DD9226C23749D8B00313210 /* Reed */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9DD9229723749D8E00313210 /* Build configuration list for PBXNativeTarget "Reed" */;
+			buildPhases = (
+				9DD9226923749D8B00313210 /* Sources */,
+				9DD9226A23749D8B00313210 /* Frameworks */,
+				9DD9226B23749D8B00313210 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Reed;
+			productName = Reed;
+			productReference = 9DD9226D23749D8B00313210 /* Reed.app */;
+			productType = "com.apple.product-type.application";
+		};
+		9DD9228223749D8E00313210 /* ReedTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9DD9229A23749D8E00313210 /* Build configuration list for PBXNativeTarget "ReedTests" */;
+			buildPhases = (
+				9DD9227F23749D8E00313210 /* Sources */,
+				9DD9228023749D8E00313210 /* Frameworks */,
+				9DD9228123749D8E00313210 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				9DD9228523749D8E00313210 /* PBXTargetDependency */,
+			);
+			name = ReedTests;
+			productName = ReedTests;
+			productReference = 9DD9228323749D8E00313210 /* ReedTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		9DD9228D23749D8E00313210 /* ReedUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9DD9229D23749D8E00313210 /* Build configuration list for PBXNativeTarget "ReedUITests" */;
+			buildPhases = (
+				9DD9228A23749D8E00313210 /* Sources */,
+				9DD9228B23749D8E00313210 /* Frameworks */,
+				9DD9228C23749D8E00313210 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				9DD9229023749D8E00313210 /* PBXTargetDependency */,
+			);
+			name = ReedUITests;
+			productName = ReedUITests;
+			productReference = 9DD9228E23749D8E00313210 /* ReedUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		9DD9226523749D8B00313210 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1110;
+				LastUpgradeCheck = 1110;
+				ORGANIZATIONNAME = "Raven Weitzel";
+				TargetAttributes = {
+					9DD9226C23749D8B00313210 = {
+						CreatedOnToolsVersion = 11.1;
+					};
+					9DD9228223749D8E00313210 = {
+						CreatedOnToolsVersion = 11.1;
+						TestTargetID = 9DD9226C23749D8B00313210;
+					};
+					9DD9228D23749D8E00313210 = {
+						CreatedOnToolsVersion = 11.1;
+						TestTargetID = 9DD9226C23749D8B00313210;
+					};
+				};
+			};
+			buildConfigurationList = 9DD9226823749D8B00313210 /* Build configuration list for PBXProject "Reed" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 9DD9226423749D8B00313210;
+			productRefGroup = 9DD9226E23749D8B00313210 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				9DD9226C23749D8B00313210 /* Reed */,
+				9DD9228223749D8E00313210 /* ReedTests */,
+				9DD9228D23749D8E00313210 /* ReedUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		9DD9226B23749D8B00313210 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9DD9227D23749D8E00313210 /* LaunchScreen.storyboard in Resources */,
+				9DD9227A23749D8E00313210 /* Preview Assets.xcassets in Resources */,
+				9DD9227723749D8E00313210 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9DD9228123749D8E00313210 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9DD9228C23749D8E00313210 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		9DD9226923749D8B00313210 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9DD9227123749D8B00313210 /* AppDelegate.swift in Sources */,
+				9DD9227323749D8B00313210 /* SceneDelegate.swift in Sources */,
+				9DD9227523749D8B00313210 /* ContentView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9DD9227F23749D8E00313210 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9DD9228823749D8E00313210 /* ReedTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9DD9228A23749D8E00313210 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9DD9229323749D8E00313210 /* ReedUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		9DD9228523749D8E00313210 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9DD9226C23749D8B00313210 /* Reed */;
+			targetProxy = 9DD9228423749D8E00313210 /* PBXContainerItemProxy */;
+		};
+		9DD9229023749D8E00313210 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9DD9226C23749D8B00313210 /* Reed */;
+			targetProxy = 9DD9228F23749D8E00313210 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		9DD9227B23749D8E00313210 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				9DD9227C23749D8E00313210 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		9DD9229523749D8E00313210 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		9DD9229623749D8E00313210 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		9DD9229823749D8E00313210 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_ASSET_PATHS = "\"Reed/Preview Content\"";
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = Reed/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.bluebeam.Reed;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		9DD9229923749D8E00313210 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_ASSET_PATHS = "\"Reed/Preview Content\"";
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = Reed/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.bluebeam.Reed;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		9DD9229B23749D8E00313210 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = ReedTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.bluebeam.ReedTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Reed.app/Reed";
+			};
+			name = Debug;
+		};
+		9DD9229C23749D8E00313210 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = ReedTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.bluebeam.ReedTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Reed.app/Reed";
+			};
+			name = Release;
+		};
+		9DD9229E23749D8E00313210 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = ReedUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.bluebeam.ReedUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Reed;
+			};
+			name = Debug;
+		};
+		9DD9229F23749D8E00313210 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = ReedUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.bluebeam.ReedUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Reed;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		9DD9226823749D8B00313210 /* Build configuration list for PBXProject "Reed" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9DD9229523749D8E00313210 /* Debug */,
+				9DD9229623749D8E00313210 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9DD9229723749D8E00313210 /* Build configuration list for PBXNativeTarget "Reed" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9DD9229823749D8E00313210 /* Debug */,
+				9DD9229923749D8E00313210 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9DD9229A23749D8E00313210 /* Build configuration list for PBXNativeTarget "ReedTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9DD9229B23749D8E00313210 /* Debug */,
+				9DD9229C23749D8E00313210 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9DD9229D23749D8E00313210 /* Build configuration list for PBXNativeTarget "ReedUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9DD9229E23749D8E00313210 /* Debug */,
+				9DD9229F23749D8E00313210 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 9DD9226523749D8B00313210 /* Project object */;
+}
