@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9D9DCA6B2374A7A800BDEAE4 /* UserSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9DCA6A2374A7A800BDEAE4 /* UserSettings.swift */; };
+		9D9DCA6D2374AA9400BDEAE4 /* ReedTabsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9DCA6C2374AA9400BDEAE4 /* ReedTabsView.swift */; };
+		9D9DCA6F2374AAAF00BDEAE4 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9DCA6E2374AAAF00BDEAE4 /* OnboardingView.swift */; };
 		9DD9227123749D8B00313210 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DD9227023749D8B00313210 /* AppDelegate.swift */; };
 		9DD9227323749D8B00313210 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DD9227223749D8B00313210 /* SceneDelegate.swift */; };
 		9DD9227523749D8B00313210 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DD9227423749D8B00313210 /* ContentView.swift */; };
@@ -35,6 +38,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9D9DCA6A2374A7A800BDEAE4 /* UserSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSettings.swift; sourceTree = "<group>"; };
+		9D9DCA6C2374AA9400BDEAE4 /* ReedTabsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReedTabsView.swift; sourceTree = "<group>"; };
+		9D9DCA6E2374AAAF00BDEAE4 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		9DD9226D23749D8B00313210 /* Reed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Reed.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9DD9227023749D8B00313210 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9DD9227223749D8B00313210 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -76,6 +82,74 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9D9DCA622374A53D00BDEAE4 /* onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				9D9DCA6E2374AAAF00BDEAE4 /* OnboardingView.swift */,
+			);
+			path = onboarding;
+			sourceTree = "<group>";
+		};
+		9D9DCA632374A55300BDEAE4 /* home */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = home;
+			sourceTree = "<group>";
+		};
+		9D9DCA642374A56000BDEAE4 /* add */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = add;
+			sourceTree = "<group>";
+		};
+		9D9DCA652374A56600BDEAE4 /* settings */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = settings;
+			sourceTree = "<group>";
+		};
+		9D9DCA662374A56C00BDEAE4 /* ui */ = {
+			isa = PBXGroup;
+			children = (
+				9D9DCA682374A5A400BDEAE4 /* tabs */,
+				9D9DCA622374A53D00BDEAE4 /* onboarding */,
+			);
+			path = ui;
+			sourceTree = "<group>";
+		};
+		9D9DCA672374A57A00BDEAE4 /* resources */ = {
+			isa = PBXGroup;
+			children = (
+				9DD9227823749D8E00313210 /* Preview Content */,
+				9DD9227623749D8E00313210 /* Assets.xcassets */,
+				9DD9227B23749D8E00313210 /* LaunchScreen.storyboard */,
+				9DD9227E23749D8E00313210 /* Info.plist */,
+			);
+			path = resources;
+			sourceTree = "<group>";
+		};
+		9D9DCA682374A5A400BDEAE4 /* tabs */ = {
+			isa = PBXGroup;
+			children = (
+				9D9DCA6C2374AA9400BDEAE4 /* ReedTabsView.swift */,
+				9D9DCA652374A56600BDEAE4 /* settings */,
+				9D9DCA642374A56000BDEAE4 /* add */,
+				9D9DCA632374A55300BDEAE4 /* home */,
+			);
+			path = tabs;
+			sourceTree = "<group>";
+		};
+		9D9DCA692374A78300BDEAE4 /* services */ = {
+			isa = PBXGroup;
+			children = (
+				9D9DCA6A2374A7A800BDEAE4 /* UserSettings.swift */,
+			);
+			path = services;
+			sourceTree = "<group>";
+		};
 		9DD9226423749D8B00313210 = {
 			isa = PBXGroup;
 			children = (
@@ -102,10 +176,9 @@
 				9DD9227023749D8B00313210 /* AppDelegate.swift */,
 				9DD9227223749D8B00313210 /* SceneDelegate.swift */,
 				9DD9227423749D8B00313210 /* ContentView.swift */,
-				9DD9227623749D8E00313210 /* Assets.xcassets */,
-				9DD9227B23749D8E00313210 /* LaunchScreen.storyboard */,
-				9DD9227E23749D8E00313210 /* Info.plist */,
-				9DD9227823749D8E00313210 /* Preview Content */,
+				9D9DCA662374A56C00BDEAE4 /* ui */,
+				9D9DCA692374A78300BDEAE4 /* services */,
+				9D9DCA672374A57A00BDEAE4 /* resources */,
 			);
 			path = Reed;
 			sourceTree = "<group>";
@@ -269,6 +342,9 @@
 			files = (
 				9DD9227123749D8B00313210 /* AppDelegate.swift in Sources */,
 				9DD9227323749D8B00313210 /* SceneDelegate.swift in Sources */,
+				9D9DCA6F2374AAAF00BDEAE4 /* OnboardingView.swift in Sources */,
+				9D9DCA6D2374AA9400BDEAE4 /* ReedTabsView.swift in Sources */,
+				9D9DCA6B2374A7A800BDEAE4 /* UserSettings.swift in Sources */,
 				9DD9227523749D8B00313210 /* ContentView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -435,9 +511,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_ASSET_PATHS = "\"Reed/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"Reed/resources/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = Reed/Info.plist;
+				INFOPLIST_FILE = Reed/resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -454,9 +530,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_ASSET_PATHS = "\"Reed/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"Reed/resources/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = Reed/Info.plist;
+				INFOPLIST_FILE = Reed/resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

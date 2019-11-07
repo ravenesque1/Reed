@@ -9,8 +9,15 @@
 import SwiftUI
 
 struct ContentView: View {
-    var body: some View {
-        Text("Hello World")
+    
+    @EnvironmentObject var userAuth: UserSettings
+    
+    @ViewBuilder var body: some View {
+        if userAuth.isLoggedIn {
+            ReedTabsView()
+        } else {
+            OnboardingView()
+        }
     }
 }
 
