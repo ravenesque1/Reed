@@ -10,31 +10,32 @@ import SwiftUI
 
 struct OnboardingView: View {
     var body: some View {
-        VStack(spacing: 10.0) {
-            Text("welcome, this is onboarding")
-            
-            Button(action: {
-                print("user wants to login")
-            }) {
-                Text("login")
-                    .frame(minWidth: 0, maxWidth: .infinity)
-                    .padding()
-                    .background(Color.blue)
-                    .foregroundColor(Color.white)
-            }
+        NavigationView {
+            VStack(spacing: 10.0) {
+                    Text("welcome, this is onboarding")
+                    
+                    NavigationLink(destination: ReedTabsView()) {
+                        Text("login")
+                            .frame(minWidth: 0, maxWidth: .infinity)
+                            .padding()
+                            .background(Color.blue)
+                            .foregroundColor(Color.white)
+                    }
 
-            
-            Button(action: {
-                print("user wants to sign up")
-            }) {
-                Text("sign up")
-                .frame(minWidth: 0, maxWidth: .infinity)
-                .padding()
-                .background(Color.green)
-                .foregroundColor(Color.white)
-            }
+                    
+                    Button(action: {
+                        print("user wants to sign up")
+                    }) {
+                        Text("sign up")
+                        .frame(minWidth: 0, maxWidth: .infinity)
+                        .padding()
+                        .background(Color.green)
+                        .foregroundColor(Color.white)
+                    }
+                }
+            .padding()
         }
-    .padding()
+        
     }
 }
 
