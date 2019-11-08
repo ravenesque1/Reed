@@ -21,6 +21,10 @@ class UserSettings: ObservableObject {
     func login() {
         self.isLoggedIn = true
     }
+    
+    func logout() {
+        self.isLoggedIn = false
+    }
 }
 
 

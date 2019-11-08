@@ -10,7 +10,20 @@ import SwiftUI
 
 struct ReedTabsView: View {
     var body: some View {
-        Text("Reed Tabs")
+        TabView {
+            FeedView()
+                .tabItem {
+                    Image(systemName: "square.stack.3d.up")
+            }
+            NewPostView()
+                .tabItem {
+                    Image(systemName: "text.badge.plus")
+            }
+            SettingsView()
+                .tabItem {
+                    Image(systemName: "gear")
+            }
+        }
     }
 }
 
