@@ -10,7 +10,9 @@ import SwiftUI
 
 struct NewPostView: View {
     var body: some View {
-        Text("New Post")
+        ReedHiddenNavBarView {
+            Text("New Post")
+        }
     }
 }
 

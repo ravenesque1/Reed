@@ -10,7 +10,13 @@ import SwiftUI
 
 struct FeedView: View {
     var body: some View {
-        Text("Feed")
+        ReedHiddenNavBarView {
+            VStack {
+                Spacer()
+                Text("Feed")
+                Spacer()
+            }
+        }
     }
 }
 

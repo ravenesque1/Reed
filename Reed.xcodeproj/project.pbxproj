@@ -13,6 +13,9 @@
 		9D9DCA712375E69600BDEAE4 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9DCA702375E69600BDEAE4 /* SettingsView.swift */; };
 		9D9DCA732375EA2500BDEAE4 /* NewPostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9DCA722375EA2500BDEAE4 /* NewPostView.swift */; };
 		9D9DCA752375EA3E00BDEAE4 /* FeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9DCA742375EA3E00BDEAE4 /* FeedView.swift */; };
+		9D9DCA782375F2FC00BDEAE4 /* ReedNavigationLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9DCA772375F2FC00BDEAE4 /* ReedNavigationLink.swift */; };
+		9D9DCA7B2375F73F00BDEAE4 /* View+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9DCA7A2375F73F00BDEAE4 /* View+Extension.swift */; };
+		9D9DCA7F2376284900BDEAE4 /* ReedHiddenNavBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9DCA7E2376284900BDEAE4 /* ReedHiddenNavBarView.swift */; };
 		9DD9227123749D8B00313210 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DD9227023749D8B00313210 /* AppDelegate.swift */; };
 		9DD9227323749D8B00313210 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DD9227223749D8B00313210 /* SceneDelegate.swift */; };
 		9DD9227523749D8B00313210 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DD9227423749D8B00313210 /* ContentView.swift */; };
@@ -47,6 +50,9 @@
 		9D9DCA702375E69600BDEAE4 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		9D9DCA722375EA2500BDEAE4 /* NewPostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPostView.swift; sourceTree = "<group>"; };
 		9D9DCA742375EA3E00BDEAE4 /* FeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedView.swift; sourceTree = "<group>"; };
+		9D9DCA772375F2FC00BDEAE4 /* ReedNavigationLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReedNavigationLink.swift; sourceTree = "<group>"; };
+		9D9DCA7A2375F73F00BDEAE4 /* View+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extension.swift"; sourceTree = "<group>"; };
+		9D9DCA7E2376284900BDEAE4 /* ReedHiddenNavBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReedHiddenNavBarView.swift; sourceTree = "<group>"; };
 		9DD9226D23749D8B00313210 /* Reed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Reed.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9DD9227023749D8B00313210 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9DD9227223749D8B00313210 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -123,6 +129,7 @@
 		9D9DCA662374A56C00BDEAE4 /* ui */ = {
 			isa = PBXGroup;
 			children = (
+				9D9DCA762375F2EC00BDEAE4 /* shared */,
 				9D9DCA682374A5A400BDEAE4 /* tabs */,
 				9D9DCA622374A53D00BDEAE4 /* onboarding */,
 			);
@@ -159,6 +166,23 @@
 			path = services;
 			sourceTree = "<group>";
 		};
+		9D9DCA762375F2EC00BDEAE4 /* shared */ = {
+			isa = PBXGroup;
+			children = (
+				9D9DCA772375F2FC00BDEAE4 /* ReedNavigationLink.swift */,
+				9D9DCA7E2376284900BDEAE4 /* ReedHiddenNavBarView.swift */,
+			);
+			path = shared;
+			sourceTree = "<group>";
+		};
+		9D9DCA792375F72B00BDEAE4 /* extensions */ = {
+			isa = PBXGroup;
+			children = (
+				9D9DCA7A2375F73F00BDEAE4 /* View+Extension.swift */,
+			);
+			path = extensions;
+			sourceTree = "<group>";
+		};
 		9DD9226423749D8B00313210 = {
 			isa = PBXGroup;
 			children = (
@@ -188,6 +212,7 @@
 				9D9DCA662374A56C00BDEAE4 /* ui */,
 				9D9DCA692374A78300BDEAE4 /* services */,
 				9D9DCA672374A57A00BDEAE4 /* resources */,
+				9D9DCA792375F72B00BDEAE4 /* extensions */,
 			);
 			path = Reed;
 			sourceTree = "<group>";
@@ -349,6 +374,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9D9DCA7F2376284900BDEAE4 /* ReedHiddenNavBarView.swift in Sources */,
 				9DD9227123749D8B00313210 /* AppDelegate.swift in Sources */,
 				9D9DCA752375EA3E00BDEAE4 /* FeedView.swift in Sources */,
 				9D9DCA712375E69600BDEAE4 /* SettingsView.swift in Sources */,
@@ -356,8 +382,10 @@
 				9D9DCA6F2374AAAF00BDEAE4 /* OnboardingView.swift in Sources */,
 				9D9DCA6D2374AA9400BDEAE4 /* ReedTabsView.swift in Sources */,
 				9D9DCA6B2374A7A800BDEAE4 /* UserSettings.swift in Sources */,
+				9D9DCA7B2375F73F00BDEAE4 /* View+Extension.swift in Sources */,
 				9DD9227523749D8B00313210 /* ContentView.swift in Sources */,
 				9D9DCA732375EA2500BDEAE4 /* NewPostView.swift in Sources */,
+				9D9DCA782375F2FC00BDEAE4 /* ReedNavigationLink.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

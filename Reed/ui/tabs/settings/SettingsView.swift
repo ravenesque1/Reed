@@ -9,18 +9,36 @@
 import SwiftUI
 
 struct SettingsView: View {
+    
     var body: some View {
-        VStack(spacing: 10.0) {
-            Text("Settings")
-            
-            NavigationLink(destination: OnboardingView()) {
-                Text("logout")
-                    .frame(minWidth: 0, maxWidth: .infinity)
-                    .padding()
-                    .background(Color.red)
-                    .foregroundColor(Color.white)
+        ReedHiddenNavBarView {
+            VStack {
+                VStack(spacing: 10.0) {
+                    
+                    HStack {
+                        Text("Settings")
+                            .font(.largeTitle)
+                            .fontWeight(.bold)
+                        Spacer()
+                    }
+                    
+                    Spacer()
+                    
+                    ReedNavigationLink(
+                        color: .red,
+                        title: "logout",
+                        destination: OnboardingView().any,
+                        inverted: true)
+                    
+                    Spacer()
+
+                }
+                .padding(.init(top: 20.0, leading: 0.0, bottom: 0.0, trailing: 0.0))
+                
+                Spacer()
             }
-        }.padding()
+            .padding()
+        }
     }
 }
 
