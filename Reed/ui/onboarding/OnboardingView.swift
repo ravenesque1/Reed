@@ -11,36 +11,29 @@ import SwiftUI
 struct OnboardingView: View {
     
     @EnvironmentObject var userAuth: UserSettings
-
+    
     
     var body: some View {
         
         ReedHiddenNavBarView {
             NavigationView {
                 VStack(spacing: 10.0) {
-                        Text("welcome, this is onboarding")
-                        
-                    Button(action: {
-                        self.userAuth.isLoggedIn = true
-                    }) {
-                        Text("login")
-                        .frame(minWidth: 0, maxWidth: .infinity)
-                        .padding()
-                        .background(Color.blue)
-                        .foregroundColor(Color.white)
-                    }
-
-                        
-                        Button(action: {
+                    Text("welcome, this is onboarding")
+                    
+                    ReedButton(
+                        color: .blue,
+                        title: "login",
+                        action: {
+                            self.userAuth.isLoggedIn = true
+                    })
+                    
+                    ReedButton(
+                        color: .green,
+                        title: "sign up",
+                        action: {
                             print("user wants to sign up")
-                        }) {
-                            Text("sign up")
-                            .frame(minWidth: 0, maxWidth: .infinity)
-                            .padding()
-                            .background(Color.green)
-                            .foregroundColor(Color.white)
-                        }
-                    }
+                    })
+                }
                 .padding()
             }
         }

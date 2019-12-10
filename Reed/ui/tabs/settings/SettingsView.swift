@@ -26,18 +26,14 @@ struct SettingsView: View {
                     
                     Spacer()
                     
-                    Button(action: {
-                        self.userAuth.isLoggedIn = false
-                    }) {
-                        Text("logout")
-                        .frame(minWidth: 0, maxWidth: .infinity)
-                        .padding()
-                        .background(Color.red)
-                        .foregroundColor(Color.white)
-                    }
+                    ReedButton(color: .red,
+                               title: "logout",
+                               action: {
+                                self.userAuth.isLoggedIn = false
+                    })
                     
                     Spacer()
-
+                    
                 }
                 .padding(.init(top: 20.0, leading: 0.0, bottom: 0.0, trailing: 0.0))
                 

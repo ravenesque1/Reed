@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9D01517A23A0289B002AD216 /* ReedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D01517923A0289B002AD216 /* ReedButton.swift */; };
 		9D9DCA6B2374A7A800BDEAE4 /* UserSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9DCA6A2374A7A800BDEAE4 /* UserSettings.swift */; };
 		9D9DCA6D2374AA9400BDEAE4 /* ReedTabsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9DCA6C2374AA9400BDEAE4 /* ReedTabsView.swift */; };
 		9D9DCA6F2374AAAF00BDEAE4 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9DCA6E2374AAAF00BDEAE4 /* OnboardingView.swift */; };
@@ -44,6 +45,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9D01517923A0289B002AD216 /* ReedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReedButton.swift; sourceTree = "<group>"; };
 		9D9DCA6A2374A7A800BDEAE4 /* UserSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSettings.swift; sourceTree = "<group>"; };
 		9D9DCA6C2374AA9400BDEAE4 /* ReedTabsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReedTabsView.swift; sourceTree = "<group>"; };
 		9D9DCA6E2374AAAF00BDEAE4 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
@@ -170,6 +172,7 @@
 			isa = PBXGroup;
 			children = (
 				9D9DCA772375F2FC00BDEAE4 /* ReedNavigationLink.swift */,
+				9D01517923A0289B002AD216 /* ReedButton.swift */,
 				9D9DCA7E2376284900BDEAE4 /* ReedHiddenNavBarView.swift */,
 			);
 			path = shared;
@@ -384,6 +387,7 @@
 				9D9DCA6B2374A7A800BDEAE4 /* UserSettings.swift in Sources */,
 				9D9DCA7B2375F73F00BDEAE4 /* View+Extension.swift in Sources */,
 				9DD9227523749D8B00313210 /* ContentView.swift in Sources */,
+				9D01517A23A0289B002AD216 /* ReedButton.swift in Sources */,
 				9D9DCA732375EA2500BDEAE4 /* NewPostView.swift in Sources */,
 				9D9DCA782375F2FC00BDEAE4 /* ReedNavigationLink.swift in Sources */,
 			);

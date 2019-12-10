@@ -49,12 +49,12 @@ struct ReedNavigationLink_Previews: PreviewProvider {
         Group {
             ReedNavigationLink(
                 color: .green,
-                title: "login",
+                title: "next",
                 destination: ReedTabsView().any)
             
             ReedNavigationLink(
                 color: .red,
-                title: "logout",
+                title: "done",
                 destination: OnboardingView().any,
                 inverted: true)
         }
