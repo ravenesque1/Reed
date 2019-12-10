@@ -9,16 +9,26 @@
 import SwiftUI
 
 struct OnboardingView: View {
+    
+    @EnvironmentObject var userAuth: UserSettings
+
+    
     var body: some View {
+        
         ReedHiddenNavBarView {
             NavigationView {
                 VStack(spacing: 10.0) {
                         Text("welcome, this is onboarding")
                         
-                    ReedNavigationLink(
-                        color: .blue,
-                        title: "login",
-                        destination: ReedTabsView().any)
+                    Button(action: {
+                        self.userAuth.isLoggedIn = true
+                    }) {
+                        Text("login")
+                        .frame(minWidth: 0, maxWidth: .infinity)
+                        .padding()
+                        .background(Color.blue)
+                        .foregroundColor(Color.white)
+                    }
 
                         
                         Button(action: {

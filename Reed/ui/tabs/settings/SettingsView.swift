@@ -10,6 +10,8 @@ import SwiftUI
 
 struct SettingsView: View {
     
+    @EnvironmentObject var userAuth: UserSettings
+    
     var body: some View {
         ReedHiddenNavBarView {
             VStack {
@@ -24,11 +26,15 @@ struct SettingsView: View {
                     
                     Spacer()
                     
-                    ReedNavigationLink(
-                        color: .red,
-                        title: "logout",
-                        destination: OnboardingView().any,
-                        inverted: true)
+                    Button(action: {
+                        self.userAuth.isLoggedIn = false
+                    }) {
+                        Text("logout")
+                        .frame(minWidth: 0, maxWidth: .infinity)
+                        .padding()
+                        .background(Color.red)
+                        .foregroundColor(Color.white)
+                    }
                     
                     Spacer()
 

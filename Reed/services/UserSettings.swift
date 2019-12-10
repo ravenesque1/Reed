@@ -9,22 +9,7 @@
 import Combine
 
 class UserSettings: ObservableObject {
-    
-    let didChange = PassthroughSubject<UserSettings,Never>()
-    
-    var isLoggedIn = false {
-        didSet {
-            didChange.send(self)
-        }
-    }
-    
-    func login() {
-        self.isLoggedIn = true
-    }
-    
-    func logout() {
-        self.isLoggedIn = false
-    }
+     @Published var isLoggedIn : Bool = false
 }
 
 
