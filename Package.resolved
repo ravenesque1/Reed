@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "CancelBag",
+        "repositoryURL": "https://github.com/devxoul/CancelBag",
+        "state": {
+          "branch": null,
+          "revision": "5280836ea9deb1a58967ec7fb278cecff2310167",
+          "version": "1.0.0"
+        }
+      }
+    ]
+  },
+  "version": 1
+}

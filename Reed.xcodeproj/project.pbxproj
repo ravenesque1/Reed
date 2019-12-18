@@ -3,11 +3,25 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		9D01517A23A0289B002AD216 /* ReedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D01517923A0289B002AD216 /* ReedButton.swift */; };
+		9D01518023A40B79002AD216 /* NewsWebService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D01517F23A40B79002AD216 /* NewsWebService.swift */; };
+		9D01518423A7FCEC002AD216 /* Agent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D01518323A7FCEC002AD216 /* Agent.swift */; };
+		9D01518823A8056F002AD216 /* Reed.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9D01518623A8056F002AD216 /* Reed.xcdatamodeld */; };
+		9D01518A23A80CE6002AD216 /* Article.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D01518923A80CE6002AD216 /* Article.swift */; };
+		9D01518C23A8102B002AD216 /* Source.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D01518B23A8102B002AD216 /* Source.swift */; };
+		9D01518E23A81216002AD216 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D01518D23A81216002AD216 /* CoreDataStack.swift */; };
+		9D01519023A84698002AD216 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D01518F23A84698002AD216 /* String+Extension.swift */; };
+		9D01519223A84B7B002AD216 /* CodingUserInfoKey+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D01519123A84B7B002AD216 /* CodingUserInfoKey+Extension.swift */; };
+		9D01519523A85685002AD216 /* FeedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D01519423A85685002AD216 /* FeedViewModel.swift */; };
+		9D01519923A98C4F002AD216 /* Manageable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D01519823A98C4F002AD216 /* Manageable.swift */; };
+		9D27CF1B23AAB2A400C9BA80 /* FeedCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D27CF1A23AAB2A300C9BA80 /* FeedCellView.swift */; };
+		9D27CF1D23AADAB900C9BA80 /* TopHeadlinesResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D27CF1C23AADAB900C9BA80 /* TopHeadlinesResponse.swift */; };
+		9D27CF2423AC35BF00C9BA80 /* ReedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D27CF2323AC35BF00C9BA80 /* ReedViewModel.swift */; };
+		9D27CF2923AC4B3700C9BA80 /* CancelBag in Frameworks */ = {isa = PBXBuildFile; productRef = 9D27CF2823AC4B3700C9BA80 /* CancelBag */; };
 		9D9DCA6B2374A7A800BDEAE4 /* UserSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9DCA6A2374A7A800BDEAE4 /* UserSettings.swift */; };
 		9D9DCA6D2374AA9400BDEAE4 /* ReedTabsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9DCA6C2374AA9400BDEAE4 /* ReedTabsView.swift */; };
 		9D9DCA6F2374AAAF00BDEAE4 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9DCA6E2374AAAF00BDEAE4 /* OnboardingView.swift */; };
@@ -46,6 +60,20 @@
 
 /* Begin PBXFileReference section */
 		9D01517923A0289B002AD216 /* ReedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReedButton.swift; sourceTree = "<group>"; };
+		9D01517F23A40B79002AD216 /* NewsWebService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsWebService.swift; sourceTree = "<group>"; };
+		9D01518123A40BBA002AD216 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		9D01518323A7FCEC002AD216 /* Agent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Agent.swift; sourceTree = "<group>"; };
+		9D01518723A8056F002AD216 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
+		9D01518923A80CE6002AD216 /* Article.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Article.swift; sourceTree = "<group>"; };
+		9D01518B23A8102B002AD216 /* Source.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Source.swift; sourceTree = "<group>"; };
+		9D01518D23A81216002AD216 /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
+		9D01518F23A84698002AD216 /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
+		9D01519123A84B7B002AD216 /* CodingUserInfoKey+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CodingUserInfoKey+Extension.swift"; sourceTree = "<group>"; };
+		9D01519423A85685002AD216 /* FeedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewModel.swift; sourceTree = "<group>"; };
+		9D01519823A98C4F002AD216 /* Manageable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Manageable.swift; sourceTree = "<group>"; };
+		9D27CF1A23AAB2A300C9BA80 /* FeedCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCellView.swift; sourceTree = "<group>"; };
+		9D27CF1C23AADAB900C9BA80 /* TopHeadlinesResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopHeadlinesResponse.swift; sourceTree = "<group>"; };
+		9D27CF2323AC35BF00C9BA80 /* ReedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReedViewModel.swift; sourceTree = "<group>"; };
 		9D9DCA6A2374A7A800BDEAE4 /* UserSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSettings.swift; sourceTree = "<group>"; };
 		9D9DCA6C2374AA9400BDEAE4 /* ReedTabsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReedTabsView.swift; sourceTree = "<group>"; };
 		9D9DCA6E2374AAAF00BDEAE4 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
@@ -76,6 +104,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9D27CF2923AC4B3700C9BA80 /* CancelBag in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -96,6 +125,36 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9D01518223A7FCC1002AD216 /* network */ = {
+			isa = PBXGroup;
+			children = (
+				9D01518323A7FCEC002AD216 /* Agent.swift */,
+			);
+			path = network;
+			sourceTree = "<group>";
+		};
+		9D01518523A80543002AD216 /* models */ = {
+			isa = PBXGroup;
+			children = (
+				9D01519823A98C4F002AD216 /* Manageable.swift */,
+				9D01518623A8056F002AD216 /* Reed.xcdatamodeld */,
+				9D01518D23A81216002AD216 /* CoreDataStack.swift */,
+				9D01518923A80CE6002AD216 /* Article.swift */,
+				9D01518B23A8102B002AD216 /* Source.swift */,
+				9D27CF1C23AADAB900C9BA80 /* TopHeadlinesResponse.swift */,
+			);
+			path = models;
+			sourceTree = "<group>";
+		};
+		9D01519323A85671002AD216 /* viewmodels */ = {
+			isa = PBXGroup;
+			children = (
+				9D27CF2323AC35BF00C9BA80 /* ReedViewModel.swift */,
+				9D01519423A85685002AD216 /* FeedViewModel.swift */,
+			);
+			path = viewmodels;
+			sourceTree = "<group>";
+		};
 		9D9DCA622374A53D00BDEAE4 /* onboarding */ = {
 			isa = PBXGroup;
 			children = (
@@ -108,6 +167,7 @@
 			isa = PBXGroup;
 			children = (
 				9D9DCA742375EA3E00BDEAE4 /* FeedView.swift */,
+				9D27CF1A23AAB2A300C9BA80 /* FeedCellView.swift */,
 			);
 			path = home;
 			sourceTree = "<group>";
@@ -164,6 +224,7 @@
 			isa = PBXGroup;
 			children = (
 				9D9DCA6A2374A7A800BDEAE4 /* UserSettings.swift */,
+				9D01517F23A40B79002AD216 /* NewsWebService.swift */,
 			);
 			path = services;
 			sourceTree = "<group>";
@@ -182,6 +243,8 @@
 			isa = PBXGroup;
 			children = (
 				9D9DCA7A2375F73F00BDEAE4 /* View+Extension.swift */,
+				9D01518F23A84698002AD216 /* String+Extension.swift */,
+				9D01519123A84B7B002AD216 /* CodingUserInfoKey+Extension.swift */,
 			);
 			path = extensions;
 			sourceTree = "<group>";
@@ -189,6 +252,7 @@
 		9DD9226423749D8B00313210 = {
 			isa = PBXGroup;
 			children = (
+				9D01518123A40BBA002AD216 /* README.md */,
 				9DD9226F23749D8B00313210 /* Reed */,
 				9DD9228623749D8E00313210 /* ReedTests */,
 				9DD9229123749D8E00313210 /* ReedUITests */,
@@ -213,6 +277,9 @@
 				9DD9227223749D8B00313210 /* SceneDelegate.swift */,
 				9DD9227423749D8B00313210 /* ContentView.swift */,
 				9D9DCA662374A56C00BDEAE4 /* ui */,
+				9D01519323A85671002AD216 /* viewmodels */,
+				9D01518523A80543002AD216 /* models */,
+				9D01518223A7FCC1002AD216 /* network */,
 				9D9DCA692374A78300BDEAE4 /* services */,
 				9D9DCA672374A57A00BDEAE4 /* resources */,
 				9D9DCA792375F72B00BDEAE4 /* extensions */,
@@ -262,6 +329,9 @@
 			dependencies = (
 			);
 			name = Reed;
+			packageProductDependencies = (
+				9D27CF2823AC4B3700C9BA80 /* CancelBag */,
+			);
 			productName = Reed;
 			productReference = 9DD9226D23749D8B00313210 /* Reed.app */;
 			productType = "com.apple.product-type.application";
@@ -334,6 +404,9 @@
 				Base,
 			);
 			mainGroup = 9DD9226423749D8B00313210;
+			packageReferences = (
+				9D27CF2723AC4B3700C9BA80 /* XCRemoteSwiftPackageReference "CancelBag" */,
+			);
 			productRefGroup = 9DD9226E23749D8B00313210 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -377,6 +450,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9D01519923A98C4F002AD216 /* Manageable.swift in Sources */,
+				9D01519223A84B7B002AD216 /* CodingUserInfoKey+Extension.swift in Sources */,
 				9D9DCA7F2376284900BDEAE4 /* ReedHiddenNavBarView.swift in Sources */,
 				9DD9227123749D8B00313210 /* AppDelegate.swift in Sources */,
 				9D9DCA752375EA3E00BDEAE4 /* FeedView.swift in Sources */,
@@ -385,9 +460,20 @@
 				9D9DCA6F2374AAAF00BDEAE4 /* OnboardingView.swift in Sources */,
 				9D9DCA6D2374AA9400BDEAE4 /* ReedTabsView.swift in Sources */,
 				9D9DCA6B2374A7A800BDEAE4 /* UserSettings.swift in Sources */,
+				9D01519023A84698002AD216 /* String+Extension.swift in Sources */,
+				9D27CF1D23AADAB900C9BA80 /* TopHeadlinesResponse.swift in Sources */,
+				9D01518E23A81216002AD216 /* CoreDataStack.swift in Sources */,
 				9D9DCA7B2375F73F00BDEAE4 /* View+Extension.swift in Sources */,
 				9DD9227523749D8B00313210 /* ContentView.swift in Sources */,
 				9D01517A23A0289B002AD216 /* ReedButton.swift in Sources */,
+				9D01518823A8056F002AD216 /* Reed.xcdatamodeld in Sources */,
+				9D01518023A40B79002AD216 /* NewsWebService.swift in Sources */,
+				9D01519523A85685002AD216 /* FeedViewModel.swift in Sources */,
+				9D27CF1B23AAB2A400C9BA80 /* FeedCellView.swift in Sources */,
+				9D27CF2423AC35BF00C9BA80 /* ReedViewModel.swift in Sources */,
+				9D01518423A7FCEC002AD216 /* Agent.swift in Sources */,
+				9D01518C23A8102B002AD216 /* Source.swift in Sources */,
+				9D01518A23A80CE6002AD216 /* Article.swift in Sources */,
 				9D9DCA732375EA2500BDEAE4 /* NewPostView.swift in Sources */,
 				9D9DCA782375F2FC00BDEAE4 /* ReedNavigationLink.swift in Sources */,
 			);
@@ -708,6 +794,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		9D27CF2723AC4B3700C9BA80 /* XCRemoteSwiftPackageReference "CancelBag" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/devxoul/CancelBag";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		9D27CF2823AC4B3700C9BA80 /* CancelBag */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9D27CF2723AC4B3700C9BA80 /* XCRemoteSwiftPackageReference "CancelBag" */;
+			productName = CancelBag;
+		};
+/* End XCSwiftPackageProductDependency section */
+
+/* Begin XCVersionGroup section */
+		9D01518623A8056F002AD216 /* Reed.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				9D01518723A8056F002AD216 /* Model.xcdatamodel */,
+			);
+			currentVersion = 9D01518723A8056F002AD216 /* Model.xcdatamodel */;
+			path = Reed.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 9DD9226523749D8B00313210 /* Project object */;
 }

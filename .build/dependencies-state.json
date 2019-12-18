@@ -1,0 +1,1 @@
+{"object": {"dependencies": [{"basedOn": null, "packageRef": {"identity": "cancelbag", "isLocal": false, "name": "CancelBag", "path": "https://github.com/devxoul/CancelBag"}, "state": {"checkoutState": {"branch": null, "revision": "5280836ea9deb1a58967ec7fb278cecff2310167", "version": "1.0.0"}, "name": "checkout"}, "subpath": "CancelBag"}]}, "version": 2}
