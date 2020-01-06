@@ -136,9 +136,7 @@
 		9D01518523A80543002AD216 /* models */ = {
 			isa = PBXGroup;
 			children = (
-				9D01519823A98C4F002AD216 /* Manageable.swift */,
-				9D01518623A8056F002AD216 /* Reed.xcdatamodeld */,
-				9D01518D23A81216002AD216 /* CoreDataStack.swift */,
+				9D586A1823C3ACED008778F0 /* database */,
 				9D01518923A80CE6002AD216 /* Article.swift */,
 				9D01518B23A8102B002AD216 /* Source.swift */,
 				9D27CF1C23AADAB900C9BA80 /* TopHeadlinesResponse.swift */,
@@ -153,6 +151,16 @@
 				9D01519423A85685002AD216 /* FeedViewModel.swift */,
 			);
 			path = viewmodels;
+			sourceTree = "<group>";
+		};
+		9D586A1823C3ACED008778F0 /* database */ = {
+			isa = PBXGroup;
+			children = (
+				9D01519823A98C4F002AD216 /* Manageable.swift */,
+				9D01518623A8056F002AD216 /* Reed.xcdatamodeld */,
+				9D01518D23A81216002AD216 /* CoreDataStack.swift */,
+			);
+			path = database;
 			sourceTree = "<group>";
 		};
 		9D9DCA622374A53D00BDEAE4 /* onboarding */ = {

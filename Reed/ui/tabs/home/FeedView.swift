@@ -11,7 +11,7 @@ import Combine
 
 struct FeedView: View {
     
-    private var feedViewModel = FeedViewModel()
+    @ObservedObject private var feedViewModel = FeedViewModel()
     
     @FetchRequest(
         entity: Article.entity(),
@@ -49,6 +49,9 @@ struct FeedView: View {
                 List(articles) { article in
                     FeedCellView(article: article)
                 }
+                .alert(isPresented: self.$feedViewModel.isErrorShown, content: { () -> Alert in
+                    Alert(title: Text("Error"), message: Text(feedViewModel.errorMessage))
+                })
             }
         }
     }

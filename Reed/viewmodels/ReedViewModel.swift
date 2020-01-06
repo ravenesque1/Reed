@@ -7,8 +7,12 @@
 //
 
 import CancelBag
+import Combine
 
-class ReedViewModel {
+class ReedViewModel: ObservableObject {
     
     let cancelBag = CancelBag()
+    
+    @Published var isErrorShown = false
+    @Published var errorMessage = ""
 }

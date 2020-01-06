@@ -12,15 +12,6 @@ import SwiftUI
 
 class FeedViewModel: ReedViewModel {
     
-    //listening for changes to Article entities in Core Data
-    @FetchRequest(
-        entity: Article.entity(),
-        sortDescriptors: [
-            NSSortDescriptor(keyPath: \Article.publishedAt, ascending: true),
-        ]
-    ) var articles: FetchedResults<Article>
-    
-    
     override init() {
         super.init()
         
@@ -78,14 +69,18 @@ extension FeedViewModel {
                                                        page: page,
                                                        pageSize: pageSize,
                                                        requiredParameters: requiredParams)
-            .sink(receiveCompletion: { self.loadArticlesFailure(error: $0) },
-                  receiveValue: { CoreDataStack.shared.silentSync(items: $0.articles) })
+            .sink(receiveCompletion: { completion in
+                switch completion {
+                case .finished:
+                    self.isErrorShown = false
+                    break
+                case .failure(let error):
+                    self.errorMessage = error.localizedDescription
+                    self.isErrorShown = true
+                }
+            }, receiveValue: { CoreDataStack.shared.silentSync(items: $0.articles) })
         
         topHeadlines.cancel(with: self.cancelBag)
-    }
-    
-    private func loadArticlesFailure(error: Subscribers.Completion<Error>) {
-        print(error)
     }
 }
 
