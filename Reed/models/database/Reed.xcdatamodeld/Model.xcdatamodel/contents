@@ -5,7 +5,7 @@
         <attribute name="content" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="String"/>
         <attribute name="publishedAt" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="summary" attributeType="String"/>
+        <attribute name="summary" optional="YES" attributeType="String"/>
         <attribute name="title" attributeType="String"/>
         <attribute name="url" attributeType="URI"/>
         <attribute name="urlToImage" optional="YES" attributeType="URI"/>

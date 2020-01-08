@@ -25,7 +25,7 @@ class Article: NSManagedObject {
     @NSManaged var source: Source
     @NSManaged var author: String
     @NSManaged var title: String
-    @NSManaged var summary: String
+    @NSManaged var summary: String?
     @NSManaged var url: URL
     @NSManaged var urlToImage: URL?
     @NSManaged var publishedAt: Date
@@ -62,13 +62,20 @@ class Article: NSManagedObject {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
         let publishedAtString = try container.decode(String.self, forKey: .publishedAt)
-        let author = try container.decodeIfPresent(String.self, forKey: .author)
-        let title = try container.decodeIfPresent(String.self, forKey: .title)
         
-        try setBasicInformation(author: author, title: title, publishedAtString: publishedAtString)
+        guard let publishedAt = Article.intoDateFormatter.date(from: publishedAtString) else {
+            throw Article.decodeFailure
+        }
+    
+        self.publishedAt = publishedAt
+        self.author = try container.decode(String.self, forKey: .author)
+        self.title = try container.decode(String.self, forKey: .title)
+        
+        self.id = publishedAtString + self.title + self.author
+        
         
         self.source = try container.decode(Source.self, forKey: .source)
-        self.summary = try container.decode(String.self, forKey: .summary)
+        self.summary = try container.decodeIfPresent(String.self, forKey: .summary)
         
         let urlString = try container.decode(String.self, forKey: .url)
         
@@ -121,18 +128,5 @@ extension Article: Manageable {
 extension Article {
     func publishedAtPretty() -> String {
         return Article.fromDateFormatter.string(from: self.publishedAt)
-    }
-    
-    ///set title, author, publish date, and ID
-    func setBasicInformation(author: String?, title: String?, publishedAtString: String) throws {
-        self.author = author ?? "No Author"
-        self.title = title ?? "No Title"
-        
-        guard let publishedAt = Article.intoDateFormatter.date(from: publishedAtString) else {
-            throw Article.decodeFailure
-        }
-        self.publishedAt = publishedAt
-        
-        self.id = publishedAtString + self.title + self.author
     }
 }

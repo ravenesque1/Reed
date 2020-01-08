@@ -18,9 +18,12 @@ struct FeedCellView: View {
             Image(systemName: "photo")
             VStack(alignment: .leading) {
                 Text(article.title)
-                Text(article.summary)
-                    .font(.subheadline)
-                    .foregroundColor(.gray)
+                if article.summary != nil {
+                    Text(article.summary!)
+                        .font(.subheadline)
+                        .foregroundColor(.gray)
+                }
+                Text(article.author)
             }
         }
     }

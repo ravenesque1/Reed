@@ -42,62 +42,41 @@ class CoreDataStack {
     }
 }
 
-//MARK: - Syncing (Delete, then Update)
+//MARK: - Syncing: Saving Items Added to the Context already via Decoder
 extension CoreDataStack {
     
-    //sync list of items with no feedback
-    func silentSync<T: Manageable>(items: [T]) {
-        _ = sync(items: items)
+    //sync list of "Safe" items with no feedback
+    func silentSafeSync<T: Manageable>(items: [Safe<T>]) {
+        _ = safeSync(items: items)
     }
     
-    ///sync a list of items, returns true if successful
-    func sync<T: Manageable>(items: [T]) -> Bool {
-        
+    //syncs "Safe" items, removing corrupted ones in the process
+    func safeSync<T: Manageable>(items: [Safe<T>]) -> Bool {
         var successful = false
         
         viewContext.performAndWait {
             
-            //0 - save all context changes before syncing
+            //0 - items put into context upon decoding, so remove Safe.value == nil
+            removeCorrputed(ofType: T.self)
+            
+            //1 - save insertion from decoding and corrpution removal
             do {
                 try saveContext()
             } catch {
-                print("Error: \(error)\nCould not save changes.")
-                return
+                print("Error: \(error)\n unable to save view context in safe sync")
             }
             
-            //1 - remove old versions of items if they exist, saving changes
-            do {
-                try deleteOldVersionsOfItems(items)
-            } catch {
-                print("Error: \(error)\nCould not batch delete existing records")
-                return
-            }
-
-            //2 - add new items and save changes
-            do {
-                try insert(items)
-            } catch {
-                print("Error: \(error)\nCould not save changes.")
-                return
-            }
-
             successful = true
-        }
-        
+        }   
         return successful
-    }
-    
-    ///sync a single item convenience method
-    func sync<T: Manageable & Identifiable>(item: T) -> Bool {
-        return sync(items: [item])
     }
 }
 
-//MARK: - Insertion
+//MARK: - Update
 extension CoreDataStack {
     
     ///updates the database and saves chnages
-    private func insert<T: Manageable>(_ items: [T]) throws {
+    private func update<T: Manageable>(_ items: [T]) throws {
         for item in items {
             guard let newItem = NSEntityDescription.insertNewObject(forEntityName: "\(T.self)", into: viewContext) as? T else {
                 print("Error: Failed to make new item.")
@@ -108,14 +87,70 @@ extension CoreDataStack {
         
         try save(changeType: .insertion)
     }
+    
+    /**
+     Delete previous instances of [T] from context using IDs, and saves provided ones
+    
+     - Warning:
+     This function will delete objects already saved, not the new ones in [T]
+    */
+    func forceUpdate<T: Manageable>(items: [T]) -> Bool {
+        
+        var successful = false
+        
+        viewContext.performAndWait {
+            
+            //0 - save all context changes before syncing
+            do {
+                try saveContext()
+            } catch {
+                print("Error: \(error)\nCould not save context.")
+                return
+            }
+            
+            //1 - remove old versions of items if they exist, saving changes
+            do {
+                try deleteOldVersionsOfItems(items)
+            } catch {
+                print("Error: \(error)\nCould not batch delete existing records")
+                return
+            }
+            
+            //2 - add new items and save changes
+            do {
+                try update(items)
+            } catch {
+                print("Error: \(error)\nCould not insert new items and save changes.")
+                return
+            }
+            
+            successful = true
+        }
+        
+        return successful
+    }
+    
+    ///forcibly update a single item convenience method
+    func forceUpdate<T: Manageable & Identifiable>(item: T) -> Bool {
+        return forceUpdate(items: [item])
+    }
 }
 
-//MARK: - Deletion
+//MARK: - Delete
 extension CoreDataStack {
+    
+    ///when Safe managed objects are used, this method removes the nil objects created
+    func removeCorrputed<T: Manageable>(ofType: T.Type) {
+        viewContext.insertedObjects
+            .compactMap { $0 as? T }
+            .filter { $0.id is String }
+            .filter { ($0.id as! String) == "" }
+            .forEach { viewContext.delete($0) }
+    }
     
     ///deletes all articles and saves changes
     func deleteAllManagedObjectsOfEntityName(_ entityName: String) {
-
+        
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entityName)
         let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
         batchDeleteRequest.resultType = .resultTypeObjectIDs
@@ -132,14 +167,14 @@ extension CoreDataStack {
     private func deleteOldVersionsOfItems<T: Identifiable>(_ items: [T]) throws {
         
         let batchDeleteRequest = generateBatchDeleteRequest(from: items)
-
+        
         try performDeleteRequest(batchDeleteRequest)
     }
     
     ///performs database deletion and saves changes via merge
     private func performDeleteRequest(_ deleteRequest: NSBatchDeleteRequest) throws {
         let batchDeleteResult = try? viewContext.execute(deleteRequest) as? NSBatchDeleteResult
-
+        
         if let deletedObjectIds = batchDeleteResult?.result as? [NSManagedObjectID] {
             try save(changeType: .deletion(deletedObjectIds))
             
@@ -160,7 +195,7 @@ extension CoreDataStack {
     }
 }
 
-//MARK: - Saving Changes
+//MARK: - Save Changes
 extension CoreDataStack {
     
     //saves change to database
@@ -170,7 +205,7 @@ extension CoreDataStack {
             try saveContext(reset: true)
         case .deletion(let deletedObjectIds):
             NSManagedObjectContext.mergeChanges(fromRemoteContextSave: [NSDeletedObjectsKey: deletedObjectIds],
-            into: [self.viewContext])
+                                                into: [self.viewContext])
         }
     }
     

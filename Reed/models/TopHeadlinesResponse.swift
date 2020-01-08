@@ -16,5 +16,7 @@ struct TopHeadlinesResponse: Decodable {
     
     var status: String
     var totalResults: Int
-    var articles: [Article]
+    
+    //one corrupted article should not spoil the bunch.
+    var articles: [Safe<Article>]
 }

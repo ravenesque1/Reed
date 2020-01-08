@@ -22,6 +22,7 @@
 		9D27CF1D23AADAB900C9BA80 /* TopHeadlinesResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D27CF1C23AADAB900C9BA80 /* TopHeadlinesResponse.swift */; };
 		9D27CF2423AC35BF00C9BA80 /* ReedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D27CF2323AC35BF00C9BA80 /* ReedViewModel.swift */; };
 		9D27CF2923AC4B3700C9BA80 /* CancelBag in Frameworks */ = {isa = PBXBuildFile; productRef = 9D27CF2823AC4B3700C9BA80 /* CancelBag */; };
+		9D2A11FF23C5369700086232 /* Safe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D2A11FE23C5369700086232 /* Safe.swift */; };
 		9D9DCA6B2374A7A800BDEAE4 /* UserSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9DCA6A2374A7A800BDEAE4 /* UserSettings.swift */; };
 		9D9DCA6D2374AA9400BDEAE4 /* ReedTabsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9DCA6C2374AA9400BDEAE4 /* ReedTabsView.swift */; };
 		9D9DCA6F2374AAAF00BDEAE4 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9DCA6E2374AAAF00BDEAE4 /* OnboardingView.swift */; };
@@ -74,6 +75,7 @@
 		9D27CF1A23AAB2A300C9BA80 /* FeedCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCellView.swift; sourceTree = "<group>"; };
 		9D27CF1C23AADAB900C9BA80 /* TopHeadlinesResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopHeadlinesResponse.swift; sourceTree = "<group>"; };
 		9D27CF2323AC35BF00C9BA80 /* ReedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReedViewModel.swift; sourceTree = "<group>"; };
+		9D2A11FE23C5369700086232 /* Safe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Safe.swift; sourceTree = "<group>"; };
 		9D9DCA6A2374A7A800BDEAE4 /* UserSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSettings.swift; sourceTree = "<group>"; };
 		9D9DCA6C2374AA9400BDEAE4 /* ReedTabsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReedTabsView.swift; sourceTree = "<group>"; };
 		9D9DCA6E2374AAAF00BDEAE4 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
@@ -159,6 +161,7 @@
 				9D01519823A98C4F002AD216 /* Manageable.swift */,
 				9D01518623A8056F002AD216 /* Reed.xcdatamodeld */,
 				9D01518D23A81216002AD216 /* CoreDataStack.swift */,
+				9D2A11FE23C5369700086232 /* Safe.swift */,
 			);
 			path = database;
 			sourceTree = "<group>";
@@ -468,6 +471,7 @@
 				9D9DCA6F2374AAAF00BDEAE4 /* OnboardingView.swift in Sources */,
 				9D9DCA6D2374AA9400BDEAE4 /* ReedTabsView.swift in Sources */,
 				9D9DCA6B2374A7A800BDEAE4 /* UserSettings.swift in Sources */,
+				9D2A11FF23C5369700086232 /* Safe.swift in Sources */,
 				9D01519023A84698002AD216 /* String+Extension.swift in Sources */,
 				9D27CF1D23AADAB900C9BA80 /* TopHeadlinesResponse.swift in Sources */,
 				9D01518E23A81216002AD216 /* CoreDataStack.swift in Sources */,

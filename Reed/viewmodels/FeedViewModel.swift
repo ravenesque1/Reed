@@ -78,7 +78,7 @@ extension FeedViewModel {
                     self.errorMessage = error.localizedDescription
                     self.isErrorShown = true
                 }
-            }, receiveValue: { CoreDataStack.shared.silentSync(items: $0.articles) })
+            }, receiveValue: { CoreDataStack.shared.safeSync(items: $0.articles) })
         
         topHeadlines.cancel(with: self.cancelBag)
     }
