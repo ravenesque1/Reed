@@ -12,6 +12,15 @@ import SwiftUI
 
 class FeedViewModel: ReedViewModel {
     
+    //true result count for "infinite" scroll
+    var totalFeedLength: Int = 0
+    
+    //size of each page loaded when scrolling
+    var feedPageSize: Int = 20
+    
+    //current page user is on
+    var feedPage: Int = 1
+    
     override init() {
         super.init()
         
@@ -26,21 +35,35 @@ extension FeedViewModel {
         loadTopHeadlines()
     }
     
+    func loadMoreTopHeadlinesFromAmerica() {
+        
+        let maxDisplayableArticleCount = feedPage * feedPageSize
+        
+        guard maxDisplayableArticleCount < totalFeedLength else {
+            print("Reached end of infinite scroll.")
+            return
+        }
+        
+        feedPage += 1
+        
+        
+        print("Scrolling to page \(feedPage)...")
+        
+        loadTopHeadlines()
+    }
+    
+    
     func loadTopHeadlinesWithSources(_ sources: [String],
-                                     query: String? = nil,
-                                     page: Int? = nil,
-                                     pageSize: Int? = nil) {
+                                     query: String? = nil) {
         
         let sources = [TopHeadlineRequiredParameters.sources(sources)]
         
-        performTopHeadlinesRequest(requiredParams: sources, query: query, page: page, pageSize: pageSize)
+        performTopHeadlinesRequest(requiredParams: sources, query: query)
     }
     
     func loadTopHeadlines(from country: String? = "us",
                           fromCategory: String? = nil,
-                          query: String? = nil,
-                          page: Int? = nil,
-                          pageSize: Int? = nil) {
+                          query: String? = nil) {
         
         var requiredParams: [TopHeadlineRequiredParameters] = []
         
@@ -52,22 +75,24 @@ extension FeedViewModel {
             requiredParams += [TopHeadlineRequiredParameters.category(category)]
         }
         
-        performTopHeadlinesRequest(requiredParams: requiredParams, query: query, page: page, pageSize: pageSize)
+        performTopHeadlinesRequest(requiredParams: requiredParams, query: query)
     }
 }
 
 //MARK: - Fetching
 extension FeedViewModel {
     
-    ///performs any request that returns a TopHeadlinesResponseObject, saving the articles to Core Data
+    /*
+     Performs any request that returns a TopHeadlinesResponseObject, saving the articles to Core Data
+    
+     Note: page = 1 is the equivalent of adding no page parameter at all
+    */
     private func performTopHeadlinesRequest(requiredParams: [TopHeadlineRequiredParameters],
-                                            query: String? = nil,
-                                            page: Int? = nil,
-                                            pageSize: Int? = nil) {
+                                            query: String? = nil) {
         
         let topHeadlines = NewsWebService.topHeadlines(query: query,
-                                                       page: page,
-                                                       pageSize: pageSize,
+                                                       page: self.feedPage,
+                                                       pageSize: self.feedPageSize,
                                                        requiredParameters: requiredParams)
             .sink(receiveCompletion: { completion in
                 switch completion {
@@ -78,7 +103,10 @@ extension FeedViewModel {
                     self.errorMessage = error.localizedDescription
                     self.isErrorShown = true
                 }
-            }, receiveValue: { CoreDataStack.shared.safeSync(items: $0.articles) })
+            }, receiveValue: { response in
+                CoreDataStack.shared.silentSafeSync(items: response.articles)
+                self.totalFeedLength = response.totalResults
+            })
         
         topHeadlines.cancel(with: self.cancelBag)
     }

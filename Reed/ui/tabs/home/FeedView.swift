@@ -46,10 +46,23 @@ struct FeedView: View {
                 
                 Spacer()
                 
-                List(articles) { article in
-                    FeedCellView(article: article)
+                //grab the index as well as the article for inifinite scrolling
+                List (articles.enumerated().map { $0 }, id: \.1.id) { (idx, article) in
+                    
+                    //when the cell is visible...
+                    FeedCellView(article: article).onAppear(perform: {
+
+                        let count = self.articles.count
+                        
+                        //...load more items if end of list is reached
+                        if idx == count - 1 {
+                          self.feedViewModel.loadMoreTopHeadlinesFromAmerica()
+                        }
+                        
+                      })
                 }
                 .alert(isPresented: self.$feedViewModel.isErrorShown, content: { () -> Alert in
+                    //if there's a fetching error, bubble it up
                     Alert(title: Text("Error"), message: Text(feedViewModel.errorMessage))
                 })
             }

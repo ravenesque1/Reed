@@ -14,7 +14,10 @@ struct FeedCellView: View {
     var idx: Int = 0
     
     var body: some View {
-        HStack {
+        
+        
+        
+        return HStack {
             Image(systemName: "photo")
             VStack(alignment: .leading) {
                 Text(article.title)
@@ -24,6 +27,12 @@ struct FeedCellView: View {
                         .foregroundColor(.gray)
                 }
                 Text(article.author)
+                    .font(.subheadline)
+                
+                Text(article.id)
+                    .font(.footnote)
+                    .foregroundColor(.red)
+
             }
         }
     }

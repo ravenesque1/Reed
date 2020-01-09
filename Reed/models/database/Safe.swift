@@ -21,7 +21,8 @@ public struct Safe<Base: Decodable>: Decodable {
             let container = try decoder.singleValueContainer()
             self.value = try container.decode(Base.self)
         } catch {
-            print("Error: \(error)\nFailed to decode \(Base.self)")
+            print("Warning! Failed to decode Safe \(Base.self), likely due to corruption.")
+//            print("Warning! \(error)\nFailed to decode \(Base.self)")
             self.value = nil
         }
     }

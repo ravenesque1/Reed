@@ -67,7 +67,7 @@ extension CoreDataStack {
             }
             
             successful = true
-        }   
+        }
         return successful
     }
 }
