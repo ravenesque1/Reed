@@ -16,6 +16,16 @@ struct Agent {
         let response: URLResponse
     }
     
+    func dataFromUrl(_ url: URL) -> AnyPublisher<Response<Data>, Error> {
+        return URLSession.shared
+            .dataTaskPublisher(for: url)
+            .tryMap { result -> Response<Data> in
+                return Response(value: result.data, response: result.response)
+        }
+        .receive(on: DispatchQueue.global())
+        .eraseToAnyPublisher()
+    }
+    
     func run<T: Decodable>(_ request: URLRequest, _ decoder: JSONDecoder = JSONDecoder()) -> AnyPublisher<Response<T>, Error> {
         return URLSession.shared
             

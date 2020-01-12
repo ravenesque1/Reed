@@ -22,7 +22,6 @@ public struct Safe<Base: Decodable>: Decodable {
             self.value = try container.decode(Base.self)
         } catch {
             print("Warning! Failed to decode Safe \(Base.self), likely due to corruption.")
-//            print("Warning! \(error)\nFailed to decode \(Base.self)")
             self.value = nil
         }
     }

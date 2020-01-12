@@ -12,6 +12,9 @@ import SwiftUI
 
 class FeedViewModel: ReedViewModel {
     
+    //view model for each article
+    private var articleViewModels = [Int: ArticleViewModel]()
+    
     //true result count for "infinite" scroll
     var totalFeedLength: Int = 0
     
@@ -25,6 +28,12 @@ class FeedViewModel: ReedViewModel {
         super.init()
         
         loadTopHeadlinesFromAmerica()
+    }
+    
+    //MARK: Preview
+    static func sample() {
+        _ = ArticleViewModel.sample()
+        _ = ArticleViewModel.longSample()
     }
 }
 
@@ -40,14 +49,14 @@ extension FeedViewModel {
         let maxDisplayableArticleCount = feedPage * feedPageSize
         
         guard maxDisplayableArticleCount < totalFeedLength else {
-            print("Reached end of infinite scroll.")
+            print("Info: Reached end of infinite scroll.")
             return
         }
         
         feedPage += 1
         
         
-        print("Scrolling to page \(feedPage)...")
+        print("Info: Scrolling to page \(feedPage)...")
         
         loadTopHeadlines()
     }
@@ -118,5 +127,31 @@ extension FeedViewModel {
     
     func deleteAllArticles() {
         CoreDataStack.shared.deleteAllManagedObjectsOfEntityName("Article")
+        
+        //remove all view models for the cells
+        articleViewModels.removeAll()
+        
+        //reset total number of posts
+        totalFeedLength = 0
+        
+        //reset the feed page
+        feedPage = 1
     }
 }
+
+//MARK: - Article List (aka "Feed") Management
+extension FeedViewModel {
+    func createViewModel(for article: Article, index: Int) -> ArticleViewModel {
+        let viewModel = ArticleViewModel(article: article)
+        
+        articleViewModels[index] = viewModel
+        
+        return viewModel
+    }
+    
+   func articleViewModel(at index: Int) -> ArticleViewModel? {
+        return articleViewModels[index]
+    }
+}
+
+

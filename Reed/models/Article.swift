@@ -30,6 +30,7 @@ class Article: NSManagedObject {
     @NSManaged var urlToImage: URL?
     @NSManaged var publishedAt: Date
     @NSManaged var content: String?
+    @NSManaged var imageData: Data?
     
     
     static let intoDateFormatter: DateFormatter = {

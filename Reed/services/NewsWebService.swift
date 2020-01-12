@@ -46,9 +46,7 @@ enum NewsWebService {
 extension NewsWebService {
     
     static func loadImage(url: URL) -> AnyPublisher<Data, Error> {
-        let request = URLRequest(url: url)
-        
-        return agent.run(request)
+        return agent.dataFromUrl(url)
             .map(\.value)
             .eraseToAnyPublisher()
     }

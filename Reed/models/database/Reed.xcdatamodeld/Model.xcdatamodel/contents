@@ -4,6 +4,7 @@
         <attribute name="author" attributeType="String"/>
         <attribute name="content" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="String"/>
+        <attribute name="imageData" optional="YES" attributeType="Binary"/>
         <attribute name="publishedAt" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="summary" optional="YES" attributeType="String"/>
         <attribute name="title" attributeType="String"/>
@@ -32,7 +33,7 @@
         </uniquenessConstraints>
     </entity>
     <elements>
-        <element name="Article" positionX="-63" positionY="-18" width="128" height="178"/>
+        <element name="Article" positionX="-63" positionY="-18" width="128" height="193"/>
         <element name="Source" positionX="-54" positionY="45" width="128" height="163"/>
     </elements>
 </model>

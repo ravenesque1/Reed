@@ -62,8 +62,6 @@ class Source: NSManagedObject {
         self.country = try container.decodeIfPresent(String.self, forKey: .country)
         self.language = try container.decodeIfPresent(String.self, forKey: .language)
     }
-    
-    
 }
 
 // MARK: - Encodable (of Codable)

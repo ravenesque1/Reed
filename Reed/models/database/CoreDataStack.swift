@@ -42,8 +42,11 @@ class CoreDataStack {
     }
 }
 
-//MARK: - Syncing: Saving Items Added to the Context already via Decoder
+//MARK: - Context-Saving
 extension CoreDataStack {
+    
+    
+    //MARK: Saving Context with "Safe" items pending
     
     //sync list of "Safe" items with no feedback
     func silentSafeSync<T: Manageable>(items: [Safe<T>]) {
@@ -70,10 +73,58 @@ extension CoreDataStack {
         }
         return successful
     }
+    
+    //MARK: Saving Context without "Safe" items pending
+    
+    //saves change to database
+    private func save(changeType: DatabaseChangeType) throws {
+        switch changeType {
+        case .insertion:
+            try saveContext(reset: true)
+        case .deletion(let deletedObjectIds):
+            NSManagedObjectContext.mergeChanges(fromRemoteContextSave: [NSDeletedObjectsKey: deletedObjectIds],
+                                                into: [self.viewContext])
+        }
+    }
+    
+    //saving changes made to the database
+    func saveContext(reset: Bool = false) throws {
+        if viewContext.hasChanges {
+            try viewContext.save()
+            if reset {
+                viewContext.reset()
+            }
+        }
+    }
 }
 
-//MARK: - Update
+//MARK: - CRUD-related Items
+
+//MARK: Read
 extension CoreDataStack {
+    private func read<T: Manageable>(with objectId: NSManagedObjectID, type: T.Type) -> T? {
+        
+        var maybeObject: T?
+        
+        do {
+            if let object = try viewContext.existingObject(with: objectId) as? T {
+                maybeObject = object
+            }
+        } catch {
+            print("Error: Can't find \(T.self) with objectId \(objectId).")
+        }
+        
+        return maybeObject
+    }
+}
+
+//MARK: Update
+extension CoreDataStack {
+    
+    ///convenience method to update just one item
+    private func update<T: Manageable>(_ item: T) throws {
+        try update([item])
+    }
     
     ///updates the database and saves chnages
     private func update<T: Manageable>(_ items: [T]) throws {
@@ -136,7 +187,7 @@ extension CoreDataStack {
     }
 }
 
-//MARK: - Delete
+//MARK: Delete
 extension CoreDataStack {
     
     ///when Safe managed objects are used, this method removes the nil objects created
@@ -195,27 +246,19 @@ extension CoreDataStack {
     }
 }
 
-//MARK: - Save Changes
+//MARK: - Managed Object Extensions
+
+//MARK: Articles
 extension CoreDataStack {
-    
-    //saves change to database
-    private func save(changeType: DatabaseChangeType) throws {
-        switch changeType {
-        case .insertion:
-            try saveContext(reset: true)
-        case .deletion(let deletedObjectIds):
-            NSManagedObjectContext.mergeChanges(fromRemoteContextSave: [NSDeletedObjectsKey: deletedObjectIds],
-                                                into: [self.viewContext])
-        }
-    }
-    
-    //saving changes made to the database
-    func saveContext(reset: Bool = false) throws {
-        if viewContext.hasChanges {
-            try viewContext.save()
-            if reset {
-                viewContext.reset()
-            }
+    func saveImageData(_ data: Data, to articleId: NSManagedObjectID) {
+        if let article = read(with: articleId, type: Article.self) {
+            article.imageData = data
+            
+//            do  {
+//                try viewContext.save()
+//            } catch {
+//                print("Warning! Could not save context containing freshly updated article image.")
+//            }
         }
     }
 }

@@ -23,6 +23,9 @@
 		9D27CF2423AC35BF00C9BA80 /* ReedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D27CF2323AC35BF00C9BA80 /* ReedViewModel.swift */; };
 		9D27CF2923AC4B3700C9BA80 /* CancelBag in Frameworks */ = {isa = PBXBuildFile; productRef = 9D27CF2823AC4B3700C9BA80 /* CancelBag */; };
 		9D2A11FF23C5369700086232 /* Safe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D2A11FE23C5369700086232 /* Safe.swift */; };
+		9D2A120123C93E4D00086232 /* ArticleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D2A120023C93E4D00086232 /* ArticleViewModel.swift */; };
+		9D2A120323C9437000086232 /* FeedImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D2A120223C9437000086232 /* FeedImage.swift */; };
+		9D2A120523C953B600086232 /* ArticleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D2A120423C953B600086232 /* ArticleView.swift */; };
 		9D9DCA6B2374A7A800BDEAE4 /* UserSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9DCA6A2374A7A800BDEAE4 /* UserSettings.swift */; };
 		9D9DCA6D2374AA9400BDEAE4 /* ReedTabsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9DCA6C2374AA9400BDEAE4 /* ReedTabsView.swift */; };
 		9D9DCA6F2374AAAF00BDEAE4 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9DCA6E2374AAAF00BDEAE4 /* OnboardingView.swift */; };
@@ -76,6 +79,9 @@
 		9D27CF1C23AADAB900C9BA80 /* TopHeadlinesResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopHeadlinesResponse.swift; sourceTree = "<group>"; };
 		9D27CF2323AC35BF00C9BA80 /* ReedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReedViewModel.swift; sourceTree = "<group>"; };
 		9D2A11FE23C5369700086232 /* Safe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Safe.swift; sourceTree = "<group>"; };
+		9D2A120023C93E4D00086232 /* ArticleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleViewModel.swift; sourceTree = "<group>"; };
+		9D2A120223C9437000086232 /* FeedImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedImage.swift; sourceTree = "<group>"; };
+		9D2A120423C953B600086232 /* ArticleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleView.swift; sourceTree = "<group>"; };
 		9D9DCA6A2374A7A800BDEAE4 /* UserSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSettings.swift; sourceTree = "<group>"; };
 		9D9DCA6C2374AA9400BDEAE4 /* ReedTabsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReedTabsView.swift; sourceTree = "<group>"; };
 		9D9DCA6E2374AAAF00BDEAE4 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
@@ -151,6 +157,7 @@
 			children = (
 				9D27CF2323AC35BF00C9BA80 /* ReedViewModel.swift */,
 				9D01519423A85685002AD216 /* FeedViewModel.swift */,
+				9D2A120023C93E4D00086232 /* ArticleViewModel.swift */,
 			);
 			path = viewmodels;
 			sourceTree = "<group>";
@@ -178,7 +185,9 @@
 			isa = PBXGroup;
 			children = (
 				9D9DCA742375EA3E00BDEAE4 /* FeedView.swift */,
+				9D2A120423C953B600086232 /* ArticleView.swift */,
 				9D27CF1A23AAB2A300C9BA80 /* FeedCellView.swift */,
+				9D2A120223C9437000086232 /* FeedImage.swift */,
 			);
 			path = home;
 			sourceTree = "<group>";
@@ -466,7 +475,9 @@
 				9D9DCA7F2376284900BDEAE4 /* ReedHiddenNavBarView.swift in Sources */,
 				9DD9227123749D8B00313210 /* AppDelegate.swift in Sources */,
 				9D9DCA752375EA3E00BDEAE4 /* FeedView.swift in Sources */,
+				9D2A120123C93E4D00086232 /* ArticleViewModel.swift in Sources */,
 				9D9DCA712375E69600BDEAE4 /* SettingsView.swift in Sources */,
+				9D2A120523C953B600086232 /* ArticleView.swift in Sources */,
 				9DD9227323749D8B00313210 /* SceneDelegate.swift in Sources */,
 				9D9DCA6F2374AAAF00BDEAE4 /* OnboardingView.swift in Sources */,
 				9D9DCA6D2374AA9400BDEAE4 /* ReedTabsView.swift in Sources */,
@@ -476,6 +487,7 @@
 				9D27CF1D23AADAB900C9BA80 /* TopHeadlinesResponse.swift in Sources */,
 				9D01518E23A81216002AD216 /* CoreDataStack.swift in Sources */,
 				9D9DCA7B2375F73F00BDEAE4 /* View+Extension.swift in Sources */,
+				9D2A120323C9437000086232 /* FeedImage.swift in Sources */,
 				9DD9227523749D8B00313210 /* ContentView.swift in Sources */,
 				9D01517A23A0289B002AD216 /* ReedButton.swift in Sources */,
 				9D01518823A8056F002AD216 /* Reed.xcdatamodeld in Sources */,

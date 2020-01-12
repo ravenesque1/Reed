@@ -32,6 +32,7 @@ struct ReedButton: View {
     }
 }
 
+#if DEBUG
 struct ReedButton_Previews: PreviewProvider {
     static var previews: some View {
         Group {
@@ -39,7 +40,7 @@ struct ReedButton_Previews: PreviewProvider {
                 color: .blue,
                 title: "login",
                 action: {
-                    print("user would like to login")
+                    print("Info: User would like to login")
             })
             
             ReedButton(
@@ -47,9 +48,10 @@ struct ReedButton_Previews: PreviewProvider {
                 title: "logout",
                 inverted: true,
                 action: {
-                    print("user would like to logout")
+                    print("Info: User would like to logout")
             })
         }
         .previewLayout(.fixed(width: 300, height: 70))
     }
 }
+#endif

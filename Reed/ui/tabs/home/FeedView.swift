@@ -22,7 +22,13 @@ struct FeedView: View {
     
     var body: some View {
         ReedHiddenNavBarView {
+            
             VStack {
+                
+                NavigationLink(destination: ArticleView(articleViewModel: self.feedViewModel.articleViewModel(at: 0) ?? ArticleViewModel.sample())) {
+                    Text("am nav link")
+                }
+                
                 Spacer()
                 Text("Feed: \(articles.count) Articles")
                 
@@ -49,29 +55,39 @@ struct FeedView: View {
                 //grab the index as well as the article for inifinite scrolling
                 List (articles.enumerated().map { $0 }, id: \.1.id) { (idx, article) in
                     
-                    //when the cell is visible...
-                    FeedCellView(article: article).onAppear(perform: {
-
-                        let count = self.articles.count
-                        
-                        //...load more items if end of list is reached
-                        if idx == count - 1 {
-                          self.feedViewModel.loadMoreTopHeadlinesFromAmerica()
-                        }
-                        
-                      })
+                    //when the cell/navigation link is visible...
+                    FeedCellView(articleViewModel: self.feedViewModel.createViewModel(for: article, index: idx))
+                        .onAppear(perform: {
+                            
+                            let count = self.articles.count
+                            
+                            //...load more items if end of list is reached
+                            if idx == count - 1 {
+                                print("Info: Loading more headlines")
+                                self.feedViewModel.loadMoreTopHeadlinesFromAmerica()
+                            }
+                            if let imageUrl = article.urlToImage,
+                                let cellViewModel = self.feedViewModel.articleViewModel(at: idx) {
+                                cellViewModel.loadImage(url: imageUrl, idx: idx)
+                            }
+                        })
                 }
                 .alert(isPresented: self.$feedViewModel.isErrorShown, content: { () -> Alert in
                     //if there's a fetching error, bubble it up
                     Alert(title: Text("Error"), message: Text(feedViewModel.errorMessage))
                 })
+                .padding(-20)
             }
         }
     }
 }
 
+#if DEBUG
 struct FeedView_Previews: PreviewProvider {
     static var previews: some View {
-        FeedView()
+        
+        return FeedView()
+            .environment(\.managedObjectContext, CoreDataStack.shared.persistentContainer.viewContext)
     }
 }
+#endif
