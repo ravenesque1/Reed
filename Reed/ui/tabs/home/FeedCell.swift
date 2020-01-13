@@ -16,27 +16,12 @@ struct FeedCell: View {
         
         return ZStack {
             
-            ArticleImage(imageData: articleViewModel.article.imageData)
+            ArticleImage(imageData: articleViewModel.article.imageData, urlToImage: articleViewModel.article.urlToImage)
                 .imageOpacity(0.4)
             
             
             HStack {
                 VStack(alignment: .leading) {
-
-                    Spacer()
-
-                    if articleViewModel.article.imageData == nil {
-
-                        if articleViewModel.article.urlToImage != nil {
-
-                            //note: if a url is not https, it will not be fetched
-                            Text("Can't get picture at \(articleViewModel.article.urlToImage!)")
-                                .foregroundColor(Color.red)
-                        } else {
-                            Text("No url to fetch picture provided.")
-                                .foregroundColor(Color.blue)
-                        }
-                    }
                     
                     Spacer()
                     
@@ -60,6 +45,7 @@ struct FeedCell: View {
                 Spacer()
             }
         }
+        .fixedSize(horizontal: false, vertical: true)
     }
 }
 

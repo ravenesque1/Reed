@@ -28,10 +28,9 @@ struct ArticleView: View {
             Spacer()
 
             //2- image
-            ArticleImage(imageData: articleViewModel.article.imageData)
+            ArticleImage(imageData: articleViewModel.article.imageData, urlToImage: articleViewModel.article.urlToImage)
                 .padding(.leading, -20)
                 .padding(.trailing, -20)
-                .background(Color.green)
 
             Spacer()
 
