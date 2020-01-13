@@ -22,7 +22,8 @@ struct Agent {
             .tryMap { result -> Response<Data> in
                 return Response(value: result.data, response: result.response)
         }
-        .receive(on: DispatchQueue.global())
+//        .receive(on: DispatchQueue.global())
+            .receive(on: DispatchQueue.main)
         .eraseToAnyPublisher()
     }
     

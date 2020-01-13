@@ -7,11 +7,15 @@
 //
 
 import Foundation
+import UIKit
 
 class ArticleViewModel: ReedViewModel {
-    
-    var article: Article
+
     var loadedImage: Bool = false
+
+    @Published var article: Article
+    @Published var viewSource = false
+    @Published var sourceButtonTitle: String = "View Source"
     
     init(article: Article) {
         self.article = article
@@ -24,7 +28,8 @@ class ArticleViewModel: ReedViewModel {
         article.title = "A shorty short title"
         article.summary = "A quick summary"
         article.author = "Some girl"
-        
+        article.publishedAt = Date()
+
         return ArticleViewModel(article: article)
     }
     
@@ -33,14 +38,19 @@ class ArticleViewModel: ReedViewModel {
         article.title = "An extra long and confusing totally wordy title. An extra long and confusing totally wordy title."
         article.summary = "A long long long long long long long long long long long long long long long long long long long long long long long long summary"
         article.author = "Some girl, but with a really long name"
+        article.publishedAt = Date()
         
         return ArticleViewModel(article: article)
     }
 }
 
-//MARK: Async Image Loading
 extension ArticleViewModel {
-    
+
+    func openInSafari() {
+        UIApplication.shared.open(article.url)
+    }
+
+    //asynchronously loads an article's image
     func loadImage(url: URL, idx: Int) {
         
         guard let imageUrl = article.urlToImage, article.imageData == nil else {    
@@ -66,5 +76,17 @@ extension ArticleViewModel {
                    })
                
                loadImage.cancel(with: self.cancelBag)
+    }
+
+    //toggles the visibility of source information
+    func toggleViewSource() {
+
+        //when an ObservableObject is a class (rather than a struct),
+        //it is pass by REFERENCE, not VALUE. As such, when a property
+        //changes, the object doesn't emit a "change", thus the change
+        //needs manual calling
+        self.objectWillChange.send()
+        self.viewSource = !self.viewSource
+        self.sourceButtonTitle = self.viewSource ? "Hide Source" : "View Source"
     }
 }

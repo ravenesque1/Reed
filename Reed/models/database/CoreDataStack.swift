@@ -254,11 +254,29 @@ extension CoreDataStack {
         if let article = read(with: articleId, type: Article.self) {
             article.imageData = data
             
-//            do  {
-//                try viewContext.save()
-//            } catch {
-//                print("Warning! Could not save context containing freshly updated article image.")
-//            }
+            do  {
+                try viewContext.save()
+            } catch {
+                print("Warning! Could not save context containing freshly updated article image.")
+            }
+        }
+    }
+}
+
+//MARK: Sources
+extension CoreDataStack {
+    func source(with id: String) -> Source? {
+
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Source")
+        let predicate = NSPredicate(format: "id = %@", id)
+        fetchRequest.predicate = predicate
+
+        do {
+            let tasks = try viewContext.fetch(fetchRequest)
+            return tasks.first as? Source
+        } catch {
+            print("Error fetching source: \(error)")
+            return nil
         }
     }
 }

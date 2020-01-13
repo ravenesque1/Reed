@@ -141,7 +141,7 @@ extension FeedViewModel {
 
 //MARK: - Article List (aka "Feed") Management
 extension FeedViewModel {
-    func createViewModel(for article: Article, index: Int) -> ArticleViewModel {
+    private func createViewModel(for article: Article, index: Int) -> ArticleViewModel {
         let viewModel = ArticleViewModel(article: article)
         
         articleViewModels[index] = viewModel
@@ -149,8 +149,8 @@ extension FeedViewModel {
         return viewModel
     }
     
-   func articleViewModel(at index: Int) -> ArticleViewModel? {
-        return articleViewModels[index]
+    func articleViewModel(at index: Int, article: Article) -> ArticleViewModel {
+        return articleViewModels[index] ?? createViewModel(for: article, index: index)
     }
 }
 

@@ -8,24 +8,42 @@
 
 import SwiftUI
 
-struct FeedCellView: View {
+struct FeedCell: View {
     
-    var articleViewModel: ArticleViewModel
+    @ObservedObject var articleViewModel: ArticleViewModel
     
     var body: some View {
         
         return ZStack {
             
-            FeedImage(imageData: articleViewModel.article.imageData)
+            ArticleImage(imageData: articleViewModel.article.imageData)
+                .imageOpacity(0.4)
             
             
             HStack {
                 VStack(alignment: .leading) {
+
+                    Spacer()
+
+                    if articleViewModel.article.imageData == nil {
+
+                        if articleViewModel.article.urlToImage != nil {
+
+                            //note: if a url is not https, it will not be fetched
+                            Text("Can't get picture at \(articleViewModel.article.urlToImage!)")
+                                .foregroundColor(Color.red)
+                        } else {
+                            Text("No url to fetch picture provided.")
+                                .foregroundColor(Color.blue)
+                        }
+                    }
                     
                     Spacer()
                     
                     Text(articleViewModel.article.title)
                         .font(.headline)
+                    Text(articleViewModel.article.publishedAtPretty())
+                        .font(.caption)
                     
                     if articleViewModel.article.summary != nil {
                         Text(articleViewModel.article.summary!)
@@ -49,8 +67,8 @@ struct FeedCellView: View {
 struct FeedCellView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            FeedCellView(articleViewModel: ArticleViewModel.sample())
-            FeedCellView(articleViewModel: ArticleViewModel.longSample())
+            FeedCell(articleViewModel: ArticleViewModel.sample())
+            FeedCell(articleViewModel: ArticleViewModel.longSample())
         }
         .previewLayout(.fixed(width: 400, height: 300))
         .environment(\.managedObjectContext, CoreDataStack.shared.persistentContainer.viewContext)

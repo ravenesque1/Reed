@@ -21,63 +21,70 @@ struct FeedView: View {
     ) var articles: FetchedResults<Article>
     
     var body: some View {
-        ReedHiddenNavBarView {
-            
+        NavigationView {
+
             VStack {
-                
-                NavigationLink(destination: ArticleView(articleViewModel: self.feedViewModel.articleViewModel(at: 0) ?? ArticleViewModel.sample())) {
-                    Text("am nav link")
-                }
-                
+
                 Spacer()
-                Text("Feed: \(articles.count) Articles")
-                
-                Spacer()
-                
-                ReedButton(
-                    color: .red,
-                    title: "Delete all articles",
-                    action: {
-                        self.feedViewModel.deleteAllArticles()
-                })
-                
-                Spacer()
-                
+
                 ReedButton(
                     color: .green,
                     title: "Load top headlines",
                     action: {
                         self.feedViewModel.loadTopHeadlines()
                 })
-                
-                Spacer()
-                
+
+                Spacer(minLength: 20)
+
                 //grab the index as well as the article for inifinite scrolling
                 List (articles.enumerated().map { $0 }, id: \.1.id) { (idx, article) in
-                    
-                    //when the cell/navigation link is visible...
-                    FeedCellView(articleViewModel: self.feedViewModel.createViewModel(for: article, index: idx))
-                        .onAppear(perform: {
-                            
-                            let count = self.articles.count
-                            
-                            //...load more items if end of list is reached
-                            if idx == count - 1 {
-                                print("Info: Loading more headlines")
-                                self.feedViewModel.loadMoreTopHeadlinesFromAmerica()
-                            }
-                            if let imageUrl = article.urlToImage,
-                                let cellViewModel = self.feedViewModel.articleViewModel(at: idx) {
-                                cellViewModel.loadImage(url: imageUrl, idx: idx)
-                            }
-                        })
+
+                    VStack {
+                        //navigation link
+                        NavigationLink(destination: ArticleView(articleViewModel: self.feedViewModel.articleViewModel(at: idx, article: article))) {
+
+                            //ordinarily, the "tap here!" struct would go here, but the
+                            //NavigationLink comes with a (here unwanted) disclosure indicator
+                            //arrow. Using an EmptyView here, and stacking my "tap here!" struct
+                            //in a VStack (or ZStack honestly) acheives the desired effect.
+                            EmptyView()
+                        }
+
+                        //cell that will link to detail when tapped
+                        FeedCell(articleViewModel: self.feedViewModel.articleViewModel(at: idx, article: article))
+
+                            //1- when the cell/navigation link is visible...
+                            .onAppear(perform: {
+
+                                let count = self.articles.count
+
+                                //2-...load more items if end of list is reached
+                                if idx == count - 1 {
+                                    print("Info: Loading more headlines")
+                                    self.feedViewModel.loadMoreTopHeadlinesFromAmerica()
+                                }
+                                if let imageUrl = article.urlToImage {
+                                    let cellViewModel = self.feedViewModel.articleViewModel(at: idx, article: article)
+                                    cellViewModel.loadImage(url: imageUrl, idx: idx)
+                                }
+                            })
+                    }
                 }
                 .alert(isPresented: self.$feedViewModel.isErrorShown, content: { () -> Alert in
                     //if there's a fetching error, bubble it up
                     Alert(title: Text("Error"), message: Text(feedViewModel.errorMessage))
                 })
-                .padding(-20)
+                    .padding(-20)
             }
+            .navigationBarTitle(Text("Feed: \(articles.count) Articles"))
+            .navigationBarItems(
+                trailing: Button(action: {
+                self.feedViewModel.deleteAllArticles()
+                }, label: {
+                    Image(systemName: "trash")
+                        .foregroundColor(.red)
+                })
+            )
         }
     }
 }

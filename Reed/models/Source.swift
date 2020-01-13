@@ -8,6 +8,8 @@
 
 import CoreData
 
+//a source can be for many articles, so in its relationship
+//with article, mark "To Many" in the data model
 class Source: NSManagedObject {
     
     enum CodingKeys: String, CodingKey {
@@ -19,9 +21,14 @@ class Source: NSManagedObject {
         case country
         case language
     }
-    
+
+    //the API cannot retreive source by ID, so the
+    //id and name is all the info retreived when
+    //fetched from an article
     @NSManaged var id: String
     @NSManaged var name: String
+    @NSManaged var fromArticle: Bool
+
     @NSManaged var content: String?
     @NSManaged var url: URL?
     @NSManaged var category: String?
@@ -61,6 +68,8 @@ class Source: NSManagedObject {
         self.category = try container.decodeIfPresent(String.self, forKey: .category)
         self.country = try container.decodeIfPresent(String.self, forKey: .country)
         self.language = try container.decodeIfPresent(String.self, forKey: .language)
+
+        self.fromArticle = false
     }
 }
 

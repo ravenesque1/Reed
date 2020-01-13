@@ -12,4 +12,9 @@ extension View {
     var any: AnyView {
         return AnyView(self)
     }
+
+    func align(_ inset: Alignment) -> some View {
+       return self
+            .frame(maxWidth: .infinity, alignment: inset)
+    }
 }

@@ -67,15 +67,18 @@ class Article: NSManagedObject {
         guard let publishedAt = Article.intoDateFormatter.date(from: publishedAtString) else {
             throw Article.decodeFailure
         }
-    
+
         self.publishedAt = publishedAt
         self.author = try container.decode(String.self, forKey: .author)
         self.title = try container.decode(String.self, forKey: .title)
         
         self.id = publishedAtString + self.title + self.author
-        
-        
+
+
         self.source = try container.decode(Source.self, forKey: .source)
+        self.source.fromArticle = true
+
+
         self.summary = try container.decodeIfPresent(String.self, forKey: .summary)
         
         let urlString = try container.decode(String.self, forKey: .url)

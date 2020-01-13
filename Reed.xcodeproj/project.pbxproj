@@ -18,13 +18,13 @@
 		9D01519223A84B7B002AD216 /* CodingUserInfoKey+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D01519123A84B7B002AD216 /* CodingUserInfoKey+Extension.swift */; };
 		9D01519523A85685002AD216 /* FeedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D01519423A85685002AD216 /* FeedViewModel.swift */; };
 		9D01519923A98C4F002AD216 /* Manageable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D01519823A98C4F002AD216 /* Manageable.swift */; };
-		9D27CF1B23AAB2A400C9BA80 /* FeedCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D27CF1A23AAB2A300C9BA80 /* FeedCellView.swift */; };
+		9D27CF1B23AAB2A400C9BA80 /* FeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D27CF1A23AAB2A300C9BA80 /* FeedCell.swift */; };
 		9D27CF1D23AADAB900C9BA80 /* TopHeadlinesResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D27CF1C23AADAB900C9BA80 /* TopHeadlinesResponse.swift */; };
 		9D27CF2423AC35BF00C9BA80 /* ReedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D27CF2323AC35BF00C9BA80 /* ReedViewModel.swift */; };
 		9D27CF2923AC4B3700C9BA80 /* CancelBag in Frameworks */ = {isa = PBXBuildFile; productRef = 9D27CF2823AC4B3700C9BA80 /* CancelBag */; };
 		9D2A11FF23C5369700086232 /* Safe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D2A11FE23C5369700086232 /* Safe.swift */; };
 		9D2A120123C93E4D00086232 /* ArticleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D2A120023C93E4D00086232 /* ArticleViewModel.swift */; };
-		9D2A120323C9437000086232 /* FeedImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D2A120223C9437000086232 /* FeedImage.swift */; };
+		9D2A120323C9437000086232 /* ArticleImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D2A120223C9437000086232 /* ArticleImage.swift */; };
 		9D2A120523C953B600086232 /* ArticleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D2A120423C953B600086232 /* ArticleView.swift */; };
 		9D9DCA6B2374A7A800BDEAE4 /* UserSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9DCA6A2374A7A800BDEAE4 /* UserSettings.swift */; };
 		9D9DCA6D2374AA9400BDEAE4 /* ReedTabsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9DCA6C2374AA9400BDEAE4 /* ReedTabsView.swift */; };
@@ -75,12 +75,12 @@
 		9D01519123A84B7B002AD216 /* CodingUserInfoKey+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CodingUserInfoKey+Extension.swift"; sourceTree = "<group>"; };
 		9D01519423A85685002AD216 /* FeedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewModel.swift; sourceTree = "<group>"; };
 		9D01519823A98C4F002AD216 /* Manageable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Manageable.swift; sourceTree = "<group>"; };
-		9D27CF1A23AAB2A300C9BA80 /* FeedCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCellView.swift; sourceTree = "<group>"; };
+		9D27CF1A23AAB2A300C9BA80 /* FeedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCell.swift; sourceTree = "<group>"; };
 		9D27CF1C23AADAB900C9BA80 /* TopHeadlinesResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopHeadlinesResponse.swift; sourceTree = "<group>"; };
 		9D27CF2323AC35BF00C9BA80 /* ReedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReedViewModel.swift; sourceTree = "<group>"; };
 		9D2A11FE23C5369700086232 /* Safe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Safe.swift; sourceTree = "<group>"; };
 		9D2A120023C93E4D00086232 /* ArticleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleViewModel.swift; sourceTree = "<group>"; };
-		9D2A120223C9437000086232 /* FeedImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedImage.swift; sourceTree = "<group>"; };
+		9D2A120223C9437000086232 /* ArticleImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleImage.swift; sourceTree = "<group>"; };
 		9D2A120423C953B600086232 /* ArticleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleView.swift; sourceTree = "<group>"; };
 		9D9DCA6A2374A7A800BDEAE4 /* UserSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSettings.swift; sourceTree = "<group>"; };
 		9D9DCA6C2374AA9400BDEAE4 /* ReedTabsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReedTabsView.swift; sourceTree = "<group>"; };
@@ -186,8 +186,8 @@
 			children = (
 				9D9DCA742375EA3E00BDEAE4 /* FeedView.swift */,
 				9D2A120423C953B600086232 /* ArticleView.swift */,
-				9D27CF1A23AAB2A300C9BA80 /* FeedCellView.swift */,
-				9D2A120223C9437000086232 /* FeedImage.swift */,
+				9D27CF1A23AAB2A300C9BA80 /* FeedCell.swift */,
+				9D2A120223C9437000086232 /* ArticleImage.swift */,
 			);
 			path = home;
 			sourceTree = "<group>";
@@ -487,13 +487,13 @@
 				9D27CF1D23AADAB900C9BA80 /* TopHeadlinesResponse.swift in Sources */,
 				9D01518E23A81216002AD216 /* CoreDataStack.swift in Sources */,
 				9D9DCA7B2375F73F00BDEAE4 /* View+Extension.swift in Sources */,
-				9D2A120323C9437000086232 /* FeedImage.swift in Sources */,
+				9D2A120323C9437000086232 /* ArticleImage.swift in Sources */,
 				9DD9227523749D8B00313210 /* ContentView.swift in Sources */,
 				9D01517A23A0289B002AD216 /* ReedButton.swift in Sources */,
 				9D01518823A8056F002AD216 /* Reed.xcdatamodeld in Sources */,
 				9D01518023A40B79002AD216 /* NewsWebService.swift in Sources */,
 				9D01519523A85685002AD216 /* FeedViewModel.swift in Sources */,
-				9D27CF1B23AAB2A400C9BA80 /* FeedCellView.swift in Sources */,
+				9D27CF1B23AAB2A400C9BA80 /* FeedCell.swift in Sources */,
 				9D27CF2423AC35BF00C9BA80 /* ReedViewModel.swift in Sources */,
 				9D01518423A7FCEC002AD216 /* Agent.swift in Sources */,
 				9D01518C23A8102B002AD216 /* Source.swift in Sources */,

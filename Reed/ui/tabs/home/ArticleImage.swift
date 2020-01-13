@@ -8,9 +8,10 @@
 
 import SwiftUI
 
-struct FeedImage: View {
+struct ArticleImage: View {
     
     var imageData: Data?
+    var opacity: Double = 1.0
     
     var body: some View {
         
@@ -26,7 +27,7 @@ struct FeedImage: View {
         return image
             .resizable()
             .aspectRatio(contentMode: .fill)
-            .opacity(0.4)
+            .opacity(self.opacity)
             .clipped()
     }
 }
@@ -34,8 +35,16 @@ struct FeedImage: View {
 #if DEBUG
 struct FeedImage_Previews: PreviewProvider {
     static var previews: some View {
-        FeedImage()
+        ArticleImage()
             .previewLayout(.fixed(width: 400, height: 150))
     }
 }
 #endif
+
+extension ArticleImage {
+    func imageOpacity(_ opacity: Double) -> Self {
+        var copy = self
+        copy.opacity = opacity
+        return copy
+    }
+}
