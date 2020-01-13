@@ -64,7 +64,7 @@ struct FeedView: View {
                                     self.feedViewModel.loadMoreTopHeadlinesFromAmerica()
                                 }
                                 if let imageUrl = article.urlToImage {
-                                    let cellViewModel = self.feedViewModel.articleViewModel(at: idx, article: article)
+                                    let cellViewModel = self.feedViewModel.articleViewModel(at: idx, article: article).articleImageViewModel
                                     cellViewModel.loadImage(url: imageUrl, idx: idx)
                                 }
                             })

@@ -10,54 +10,56 @@ import SwiftUI
 
 struct ArticleImage: View {
     
-    var imageData: Data?
-    var urlToImage: URL?
+    @ObservedObject var articleImageViewModel: ArticleImageViewModel
+    
+    //    var imageData: Data?
+    //    var urlToImage: URL?
     var opacity: Double = 1.0
     
     var body: some View {
         
+        //zstack brings message in front of image
         return ZStack {
             
+            //float message to the top of view
             VStack {
                 
-                if imageData == nil {
+                //1- image message if not loaded
+                Group {
                     
-                    if urlToImage != nil {
-                        
-                        //note: if a url is not https, it will not be fetched
-                        Text("Can't get picture at \(urlToImage!)")
-                            .foregroundColor(Color.red)
-                            .font(.footnote)
+                    if !articleImageViewModel.loadedImage {
+                        Text("Loading image...")
+                            .foregroundColor(Color.green)
                     } else {
-                        Text("No url to fetch picture provided.")
-                            .foregroundColor(Color.blue)
-                            .font(.footnote)
+                        if !articleImageViewModel.hasImageData() {
+                            if articleImageViewModel.hasImageUrl() {
+                                
+                                //note: if a url is not https, it will not be fetched
+                                Text("Can't get picture at \(articleImageViewModel.urlToImage!)")
+                                    .foregroundColor(Color.red)
+                            } else {
+                                Text("No url to fetch picture provided.")
+                                    .foregroundColor(Color.blue)
+                            }
+                        } else if articleImageViewModel.image == nil {
+                            Text("Unable to create image from data.")
+                                .foregroundColor(Color.orange)
+                        }
                     }
-                } else if imageFromData() == nil {
-                    Text("Unable to create image from data.")
-                        .foregroundColor(Color.orange)
-                        .font(.footnote)
                 }
+                .font(.footnote)
+                .padding(20)
+                
                 Spacer()
             }
             
-            if imageFromData() != nil {
-                image()
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .opacity(self.opacity)
-                    .clipped()
-            } else {
-                //fade out system image a bit
-                image()
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .opacity(0.4)
-                    .clipped()
-            }
-            
-            
-            
+            //2- actual image
+            image()
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+                .opacity(articleImageViewModel.image == nil ? 0.4 : self.opacity)
+                .clipped()
+
             Spacer()
         }
     }
@@ -66,7 +68,8 @@ struct ArticleImage: View {
 #if DEBUG
 struct FeedImage_Previews: PreviewProvider {
     static var previews: some View {
-        ArticleImage()
+        
+        ArticleImage(articleImageViewModel: ArticleImageViewModel.sample())
             .previewLayout(.fixed(width: 400, height: 150))
     }
 }
@@ -79,21 +82,11 @@ extension ArticleImage {
         return copy
     }
     
-    func imageFromData() -> Image? {
-        var image: Image? = nil
-        
-        if let imageData = imageData, let created = UIImage(data: imageData) {
-            image = Image(uiImage: created)
-        }
-        
-        return image
-    }
-    
     func image() -> Image {
         let image: Image
         
-        if let created = imageFromData() {
-            image = created
+        if let created = articleImageViewModel.image {
+            image = Image(uiImage: created)
         } else {
             image = Image(systemName: "photo")
         }

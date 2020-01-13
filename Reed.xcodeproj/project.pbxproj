@@ -26,6 +26,8 @@
 		9D2A120123C93E4D00086232 /* ArticleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D2A120023C93E4D00086232 /* ArticleViewModel.swift */; };
 		9D2A120323C9437000086232 /* ArticleImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D2A120223C9437000086232 /* ArticleImage.swift */; };
 		9D2A120523C953B600086232 /* ArticleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D2A120423C953B600086232 /* ArticleView.swift */; };
+		9D2A120723CCE85700086232 /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D2A120623CCE85700086232 /* Date+Extension.swift */; };
+		9D2A120923CCE8DC00086232 /* ArticleImageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D2A120823CCE8DC00086232 /* ArticleImageViewModel.swift */; };
 		9D9DCA6B2374A7A800BDEAE4 /* UserSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9DCA6A2374A7A800BDEAE4 /* UserSettings.swift */; };
 		9D9DCA6D2374AA9400BDEAE4 /* ReedTabsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9DCA6C2374AA9400BDEAE4 /* ReedTabsView.swift */; };
 		9D9DCA6F2374AAAF00BDEAE4 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9DCA6E2374AAAF00BDEAE4 /* OnboardingView.swift */; };
@@ -82,6 +84,8 @@
 		9D2A120023C93E4D00086232 /* ArticleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleViewModel.swift; sourceTree = "<group>"; };
 		9D2A120223C9437000086232 /* ArticleImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleImage.swift; sourceTree = "<group>"; };
 		9D2A120423C953B600086232 /* ArticleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleView.swift; sourceTree = "<group>"; };
+		9D2A120623CCE85700086232 /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
+		9D2A120823CCE8DC00086232 /* ArticleImageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleImageViewModel.swift; sourceTree = "<group>"; };
 		9D9DCA6A2374A7A800BDEAE4 /* UserSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSettings.swift; sourceTree = "<group>"; };
 		9D9DCA6C2374AA9400BDEAE4 /* ReedTabsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReedTabsView.swift; sourceTree = "<group>"; };
 		9D9DCA6E2374AAAF00BDEAE4 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
@@ -158,6 +162,7 @@
 				9D27CF2323AC35BF00C9BA80 /* ReedViewModel.swift */,
 				9D01519423A85685002AD216 /* FeedViewModel.swift */,
 				9D2A120023C93E4D00086232 /* ArticleViewModel.swift */,
+				9D2A120823CCE8DC00086232 /* ArticleImageViewModel.swift */,
 			);
 			path = viewmodels;
 			sourceTree = "<group>";
@@ -265,6 +270,7 @@
 				9D9DCA7A2375F73F00BDEAE4 /* View+Extension.swift */,
 				9D01518F23A84698002AD216 /* String+Extension.swift */,
 				9D01519123A84B7B002AD216 /* CodingUserInfoKey+Extension.swift */,
+				9D2A120623CCE85700086232 /* Date+Extension.swift */,
 			);
 			path = extensions;
 			sourceTree = "<group>";
@@ -479,10 +485,12 @@
 				9D9DCA712375E69600BDEAE4 /* SettingsView.swift in Sources */,
 				9D2A120523C953B600086232 /* ArticleView.swift in Sources */,
 				9DD9227323749D8B00313210 /* SceneDelegate.swift in Sources */,
+				9D2A120923CCE8DC00086232 /* ArticleImageViewModel.swift in Sources */,
 				9D9DCA6F2374AAAF00BDEAE4 /* OnboardingView.swift in Sources */,
 				9D9DCA6D2374AA9400BDEAE4 /* ReedTabsView.swift in Sources */,
 				9D9DCA6B2374A7A800BDEAE4 /* UserSettings.swift in Sources */,
 				9D2A11FF23C5369700086232 /* Safe.swift in Sources */,
+				9D2A120723CCE85700086232 /* Date+Extension.swift in Sources */,
 				9D01519023A84698002AD216 /* String+Extension.swift in Sources */,
 				9D27CF1D23AADAB900C9BA80 /* TopHeadlinesResponse.swift in Sources */,
 				9D01518E23A81216002AD216 /* CoreDataStack.swift in Sources */,

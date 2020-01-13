@@ -10,15 +10,25 @@ import Foundation
 import UIKit
 
 class ArticleViewModel: ReedViewModel {
-
-    var loadedImage: Bool = false
+    
+    @Published var articleImageViewModel: ArticleImageViewModel
+    
+    var timeAgoString: String? {
+        return article.publishedAt.timeAgoString
+    }
+    
+    var hasTimeAgoString: Bool {
+        return timeAgoString != nil
+    }
 
     @Published var article: Article
-    @Published var viewSource = false
-    @Published var sourceButtonTitle: String = "View Source"
+    @Published var showPreview = false
+    @Published var previewButtonTitle: String = "Show Preview"
+    @Published var viewButtonTitle: String = "View in Safari"
     
     init(article: Article) {
         self.article = article
+        self.articleImageViewModel = ArticleImageViewModel(article: article)
         super.init()
     }
     
@@ -50,35 +60,7 @@ extension ArticleViewModel {
         UIApplication.shared.open(article.url)
     }
 
-    //asynchronously loads an article's image
-    func loadImage(url: URL, idx: Int) {
-        
-        guard let imageUrl = article.urlToImage, article.imageData == nil else {    
-            if article.urlToImage == nil {
-                print("Warning! No image url for \(idx)")
-            }
-            return
-        }
-        
-        let loadImage = NewsWebService.loadImage(url: imageUrl)
-                   .sink(receiveCompletion: { completion in
-                       switch completion {
-                       case .finished:
-                           self.isErrorShown = false
-                           break
-                       case .failure(let error):
-                           self.errorMessage = error.localizedDescription
-                           self.isErrorShown = true
-                           print("Error: Failed to download image for \(idx): \(self.errorMessage)")
-                       }
-                   }, receiveValue: { response in
-                        CoreDataStack.shared.saveImageData(response, to: self.article.objectID)
-                   })
-               
-               loadImage.cancel(with: self.cancelBag)
-    }
-
-    //toggles the visibility of source information
+    //toggles the visibility of preview
     func toggleViewSource() {
 
         //when an ObservableObject is a class (rather than a struct),
@@ -86,7 +68,8 @@ extension ArticleViewModel {
         //changes, the object doesn't emit a "change", thus the change
         //needs manual calling
         self.objectWillChange.send()
-        self.viewSource = !self.viewSource
-        self.sourceButtonTitle = self.viewSource ? "Hide Source" : "View Source"
+        self.showPreview = !self.showPreview
+        self.previewButtonTitle = self.showPreview ? "Hide Preview" : "Show Preview"
+        self.viewButtonTitle = self.showPreview ? "Continue in Safari" : "View in Safari"
     }
 }

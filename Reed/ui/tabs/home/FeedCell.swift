@@ -16,7 +16,7 @@ struct FeedCell: View {
         
         return ZStack {
             
-            ArticleImage(imageData: articleViewModel.article.imageData, urlToImage: articleViewModel.article.urlToImage)
+            ArticleImage(articleImageViewModel: articleViewModel.articleImageViewModel)
                 .imageOpacity(0.4)
             
             
@@ -25,19 +25,28 @@ struct FeedCell: View {
                     
                     Spacer()
                     
+                    Text(articleViewModel.article.source.name)
+                    
                     Text(articleViewModel.article.title)
                         .font(.headline)
-                    Text(articleViewModel.article.publishedAtPretty())
-                        .font(.caption)
                     
-                    if articleViewModel.article.summary != nil {
-                        Text(articleViewModel.article.summary!)
-                            .font(.body)
-                    }
-                    Text(articleViewModel.article.author)
-                        .font(.subheadline)
-                        .fontWeight(.bold)
+//                    HStack {
+//                        Text(articleViewModel.article.author)
+//                            .fontWeight(.bold)
+//                            .lineLimit(1)
+                        
+                        if articleViewModel.hasTimeAgoString {
+                            Text(articleViewModel.timeAgoString!)
+                                .italic()
+                            .font(.caption)
+                        }
+//                    }
                     
+                    
+//                    if articleViewModel.article.summary != nil {
+//                        Text(articleViewModel.article.summary!)
+//                            .font(.body)
+//                    }
                 }
                 .padding(.leading, 10)
                 .padding(.bottom, 10)

@@ -13,78 +13,89 @@ struct ArticleView: View {
     @ObservedObject var articleViewModel: ArticleViewModel
     
     var body: some View {
-        ScrollView {
-
-            //1- title
+        ScrollView(showsIndicators: false) {
+            
+            //1- title and date
             Group {
                 Text(articleViewModel.article.title)
                     .font(.headline)
-                Text(articleViewModel.article.author)
-                    .font(.subheadline)
-                    .italic()
+                Text(articleViewModel.article.publishedAtPretty())
+                    .font(.caption)
+                
             }
             .align(.leading)
-
+            
             Spacer()
-
-            //2- image
-            ArticleImage(imageData: articleViewModel.article.imageData, urlToImage: articleViewModel.article.urlToImage)
+            
+            //2- image and author
+            ArticleImage(articleImageViewModel: articleViewModel.articleImageViewModel)
                 .padding(.leading, -20)
                 .padding(.trailing, -20)
-
+            
             Spacer()
-
-            Text(articleViewModel.article.publishedAtPretty())
-                .font(.caption)
-                .align(.trailing)
-
-            Spacer()
-
-            //detail
-            Text(articleViewModel.article.content ?? "No content.")
+            
+            Text(articleViewModel.article.author)
+                .font(.subheadline)
+                .italic()
+                .align(.leading)
+            
+            Spacer(minLength: 30)
+            
+            //3- summary
+            VStack {
+                Group {
+                    if articleViewModel.article.summary != nil {
+                        Text("Summary: ")
+                            .bold()
+                        Text(articleViewModel.article.summary!)
+                    } else {
+                        Text("No summary available.")
+                    }
+                }
+                    
                 .font(.body)
                 .align(.leading)
-                .fixedSize(horizontal: false, vertical: true)
-
-            Spacer(minLength: 30)
-
-            //source
-            VStack {
-
-                HStack {
-                    Spacer()
-                }
-
-                Group {
-                    Button(action: self.articleViewModel.toggleViewSource) {
-                        Text(self.articleViewModel.sourceButtonTitle)
-                    }
-
-                    Spacer()
-
-                    if articleViewModel.viewSource {
-
-                        Text(self.articleViewModel.article.source.name)
-                        Text("id: \(self.articleViewModel.article.source.id)")
-                            .italic()
-                            .font(.caption)
-                    }
-
-                    Spacer(minLength: 30)
-
-                    //external link
-                    ReedButton(
-                        color: .blue,
-                        title: "View in Safari",
-                        inverted: true,
-                        action: {
-                            self.articleViewModel.openInSafari()
-                    })
-                }
-                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(5)
             }
+            .border(Color.black)
+            
+            Spacer(minLength: 30)
+            
+            //4- preview and safari link
+            VStack {
+                
+                if self.articleViewModel.article.content != nil {
+                    Button(action: self.articleViewModel.toggleViewSource) {
+                        Text(self.articleViewModel.previewButtonTitle)
+                            .foregroundColor(self.articleViewModel.showPreview ? .red : .blue)
+                    }
+                    .align(.leading)
+                    
+                    if articleViewModel.showPreview {
+                        Text(self.articleViewModel.article.content!)
+                            .font(.body)
+                            .faded()
+                    }
+                }
+                
+                Spacer(minLength: 30)
+                
+                ReedButton(
+                    color: .blue,
+                    title: self.articleViewModel.viewButtonTitle,
+                    inverted: true,
+                    action: {
+                        self.articleViewModel.openInSafari()
+                })
+            }
+                //maintain view size when preview is toggled
+                .fixedSize(horizontal: false, vertical: true)
+            
+            //5- a little space at the bottom
+            Spacer()
         }
         .padding(.horizontal)
+        .navigationBarTitle(articleViewModel.article.source.name)
     }
 }
 
