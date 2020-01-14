@@ -31,6 +31,8 @@ class Article: NSManagedObject {
     @NSManaged var publishedAt: Date
     @NSManaged var content: String?
     @NSManaged var imageData: Data?
+    @NSManaged var country: String?
+    @NSManaged var category: String?
     
     
     static let intoDateFormatter: DateFormatter = {

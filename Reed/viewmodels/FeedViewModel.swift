@@ -24,10 +24,16 @@ class FeedViewModel: ReedViewModel {
     //current page user is on
     var feedPage: Int = 1
     
+    //filtering
+    var filterKey = "category"
+    var filterValue = "general"
+    @Published var feedNavigationTitle: String = "Top Posts in America"
+    
     override init() {
         super.init()
         
-        loadTopHeadlinesFromAmerica()
+//        loadTopHeadlinesFromAmerica()
+        loadGlobalTopHeadlines()
     }
     
     //MARK: Preview
@@ -40,12 +46,28 @@ class FeedViewModel: ReedViewModel {
 //MARK: - Top Headlines
 extension FeedViewModel {
     
+    func loadGlobalTopHeadlines() {
+        feedNavigationTitle = "Top Posts Everywhere"
+        
+        loadTopHeadlines(fromCategory: self.filterValue)
+    }
+    
+    func loadMoreGlobalTopHeadlines() {
+        incrementPage()
+        loadGlobalTopHeadlines()
+    }
+    
     func loadTopHeadlinesFromAmerica() {
-        loadTopHeadlines()
+        feedNavigationTitle = "Top Posts in America"
+        loadTopHeadlines(from: self.filterValue)
     }
     
     func loadMoreTopHeadlinesFromAmerica() {
-        
+        incrementPage()
+        loadTopHeadlinesFromAmerica()
+    }
+    
+    private func incrementPage() {
         let maxDisplayableArticleCount = feedPage * feedPageSize
         
         guard maxDisplayableArticleCount < totalFeedLength else {
@@ -57,8 +79,6 @@ extension FeedViewModel {
         
         
         print("Info: Scrolling to page \(feedPage)...")
-        
-        loadTopHeadlines()
     }
     
     
@@ -70,7 +90,7 @@ extension FeedViewModel {
         performTopHeadlinesRequest(requiredParams: sources, query: query)
     }
     
-    func loadTopHeadlines(from country: String? = "us",
+    func loadTopHeadlines(from country: String? = nil,
                           fromCategory: String? = nil,
                           query: String? = nil) {
         
@@ -113,6 +133,25 @@ extension FeedViewModel {
                     self.isErrorShown = true
                 }
             }, receiveValue: { response in
+                
+                response.articles.forEach{ maybeArticle in
+                 
+                    guard let article = maybeArticle.value else { return }
+                    
+                    for param in requiredParams {
+                        switch param {
+                        case .category(let category):
+                            article.category = category
+                        case .country(let country):
+                            article.country = country
+                        default:
+                            //TODO: save source information
+                            break
+                        }
+                    }
+                    
+                }
+                
                 CoreDataStack.shared.silentSafeSync(items: response.articles)
                 self.totalFeedLength = response.totalResults
             })
@@ -151,6 +190,13 @@ extension FeedViewModel {
     
     func articleViewModel(at index: Int, article: Article) -> ArticleViewModel {
         return articleViewModels[index] ?? createViewModel(for: article, index: index)
+    }
+    
+    func togglePredicate() {
+        self.objectWillChange.send()
+//        self.filterKey = filterKey == "country" ? "category" : "country"
+        self.filterValue = filterValue == "business" ? "general" : "business"
+        loadGlobalTopHeadlines()
     }
 }
 
