@@ -15,6 +15,12 @@ struct ArticleImage: View {
     //    var imageData: Data?
     //    var urlToImage: URL?
     var opacity: Double = 1.0
+
+    init(articleImageViewModel: ArticleImageViewModel) {
+        self.articleImageViewModel = articleImageViewModel
+
+//        self.articleImageViewModel.loadImage(url: self.article.url, idx: index)
+    }
     
     var body: some View {
         
@@ -76,6 +82,7 @@ struct FeedImage_Previews: PreviewProvider {
 #endif
 
 extension ArticleImage {
+    
     func imageOpacity(_ opacity: Double) -> Self {
         var copy = self
         copy.opacity = opacity

@@ -12,6 +12,8 @@ class ArticleImageViewModel: ReedViewModel {
     
     @Published var article: Article
     @Published var loadedImage: Bool = false
+
+    var index: Int
     
     var image: UIImage? {
         return imageFromData()
@@ -25,8 +27,9 @@ class ArticleImageViewModel: ReedViewModel {
         return article.urlToImage
     }
     
-    init(article: Article) {
+    init(article: Article, index: Int) {
         self.article = article
+        self.index = index
         super.init()
     }
     
@@ -38,7 +41,7 @@ class ArticleImageViewModel: ReedViewModel {
         article.author = "Some girl"
         article.publishedAt = Date()
 
-        return ArticleImageViewModel(article: article)
+        return ArticleImageViewModel(article: article, index: 0)
     }
 }
 
@@ -61,7 +64,7 @@ extension ArticleImageViewModel {
     }
 
     //asynchronously loads an article's image
-    func loadImage(url: URL, idx: Int) {
+    func loadImage() {
         
         guard let imageUrl = article.urlToImage, article.imageData == nil else {
             
@@ -71,7 +74,7 @@ extension ArticleImageViewModel {
             }
             
             if article.urlToImage == nil {
-                print("Warning! No image url for \(idx)")
+                print("Warning! No image url for \(self.index)")
             }
             return
         }
@@ -89,7 +92,7 @@ extension ArticleImageViewModel {
                        case .failure(let error):
                            self.errorMessage = error.localizedDescription
                            self.isErrorShown = true
-                           print("Error: Failed to download image for \(idx): \(self.errorMessage)")
+                           print("Error: Failed to download image for \(self.index): \(self.errorMessage)")
                        }
                    }, receiveValue: { response in
                         CoreDataStack.shared.saveImageData(response, to: self.article.objectID)

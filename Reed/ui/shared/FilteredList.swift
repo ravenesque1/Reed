@@ -10,21 +10,24 @@ import Combine
 import CoreData
 import SwiftUI
 
-struct FilteredList<T: NSManagedObject, Content: View>: View {
+struct FilteredList<T: Manageable, Content: View>: View {
     var fetchRequest: FetchRequest<T>
-    var singers: FetchedResults<T> { fetchRequest.wrappedValue }
+    var item: FetchedResults<T> { fetchRequest.wrappedValue }
 
     // this is our content closure; we'll call this once for each item in the list
-    let content: (T) -> Content
+    let content: (Int, T, Int) -> Content
 
     var body: some View {
-        List(fetchRequest.wrappedValue, id: \.self) { singer in
-            self.content(singer)
+
+        //List (articles.enumerated().map { $0 }, id: \.1.id) { (idx, article) in
+        List (fetchRequest.wrappedValue.enumerated().map { $0 }, id: \.self.1.id) { (idx, article) in
+            self.content(idx, article, self.fetchRequest.wrappedValue.count)
         }
     }
 
-    init(filterKey: String, filterValue: String, @ViewBuilder content: @escaping (T) -> Content) {
-        fetchRequest = FetchRequest<T>(entity: T.entity(), sortDescriptors: [], predicate: NSPredicate(format: "%K BEGINSWITH %@", filterKey, filterValue))
+    //TODO: multiple properties in predicate
+    init(predicate: NSPredicate?, @ViewBuilder content: @escaping (Int, T, Int) -> Content) {
+        fetchRequest = FetchRequest<T>(entity: T.entity(), sortDescriptors: [], predicate: predicate)
         self.content = content
     }
 }

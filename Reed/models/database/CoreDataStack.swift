@@ -196,7 +196,11 @@ extension CoreDataStack {
             .compactMap { $0 as? T }
             .filter { $0.id is String }
             .filter { ($0.id as! String) == "" }
-            .forEach { viewContext.delete($0) }
+            .forEach { item in
+                if !item.isDeleted {
+                viewContext.delete(item)
+                }
+        }
     }
     
     ///deletes all articles and saves changes
@@ -253,7 +257,9 @@ extension CoreDataStack {
     func saveImageData(_ data: Data, to articleId: NSManagedObjectID) {
         if let article = read(with: articleId, type: Article.self) {
             article.imageData = data
-            
+                //0 - items put into context upon decoding, so remove Safe.value == nil
+                removeCorrputed(ofType: Article.self)
+
             do  {
                 try viewContext.save()
             } catch {

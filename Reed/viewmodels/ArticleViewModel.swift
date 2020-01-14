@@ -26,9 +26,9 @@ class ArticleViewModel: ReedViewModel {
     @Published var previewButtonTitle: String = "Show Preview"
     @Published var viewButtonTitle: String = "View in Safari"
     
-    init(article: Article) {
+    init(article: Article, index: Int) {
         self.article = article
-        self.articleImageViewModel = ArticleImageViewModel(article: article)
+        self.articleImageViewModel = ArticleImageViewModel(article: article, index: index)
         super.init()
     }
     
@@ -40,7 +40,7 @@ class ArticleViewModel: ReedViewModel {
         article.author = "Some girl"
         article.publishedAt = Date()
 
-        return ArticleViewModel(article: article)
+        return ArticleViewModel(article: article, index: 0)
     }
     
     static func longSample() -> ArticleViewModel {
@@ -50,7 +50,7 @@ class ArticleViewModel: ReedViewModel {
         article.author = "Some girl, but with a really long name"
         article.publishedAt = Date()
         
-        return ArticleViewModel(article: article)
+        return ArticleViewModel(article: article, index: 0)
     }
 }
 
