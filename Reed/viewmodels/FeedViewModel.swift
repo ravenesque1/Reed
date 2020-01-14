@@ -32,8 +32,12 @@ class FeedViewModel: ReedViewModel {
     //current page user is on
     var feedPage: Int = 1
     
-    //filtering
-    var filterKey = "category"
+    //filtering categories
+    var categoryFilterKey = "category"
+    
+    var categoryFilterValue: String {
+        return categories[currentCategory]
+    }
 
     @Published var currentCategory = 0 {
         didSet {
@@ -43,9 +47,30 @@ class FeedViewModel: ReedViewModel {
     }
 
     var categories = ["all", "business", "entertainment", "science"]
-    var filterValue: String {
-        return categories[currentCategory]
+    
+    
+    
+    //filtering countries
+    var countryFilterKey = "country"
+    
+    var countryFilterValue: String {
+        return countries[currentCountry]
     }
+    
+    var countryFlagDict = [ "us": "🇺🇸" ,
+                            "gb": "🇬🇧",
+                            "cn":"🇨🇳"]
+    
+    var countries: [String] {
+        return Array(countryFlagDict.keys)
+    }
+    @Published var currentCountry = 0 {
+        didSet {
+            self.resetFilter()
+            self.loadAmericanTopHeadlinesWithCategory()
+        }
+    }
+    
 
     @Published var predicate: NSPredicate?
     @Published var feedNavigationTitle: String = "Top Posts in America"
@@ -98,16 +123,22 @@ extension FeedViewModel {
         let trueCurrent = self.categories[self.currentCategory]
 
         var category: String? = "general"
-//        let filter = trueCurrent == "all" ? "general" : filterValue
 
         if trueCurrent != "all" {
-            predicate = NSPredicate(format: "%K BEGINSWITH %@", filterKey, filterValue)
+            predicate = NSPredicate(format: "%K BEGINSWITH %@ AND %K BEGINSWITH %@",
+                                    categoryFilterKey,
+                                    categoryFilterValue,
+            countryFilterKey,
+            countryFilterValue)
             category = trueCurrent
         } else {
-            predicate = nil
+            //we still want to filter by country even though we aren't filtering by category
+            predicate = NSPredicate(format: "%K BEGINSWITH %@" ,
+            countryFilterKey,
+            countryFilterValue)
         }
 
-        loadTopHeadlines(from: "us",
+        loadTopHeadlines(from: countryFilterValue,
                          fromCategory: category)
 
 //        loadTopHeadlines(fromCategory: self.categories[currentCategory])
@@ -282,6 +313,10 @@ extension FeedViewModel {
         
         let cellViewModel = articleViewModel(at: index, article: article).articleImageViewModel
         cellViewModel.loadImage()
+    }
+    
+    func country(for idx: Int) -> String {
+        return countryFlagDict[countries[idx]]!
     }
     
 //    func togglePredicate() {

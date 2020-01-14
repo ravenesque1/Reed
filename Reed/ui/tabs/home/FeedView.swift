@@ -24,17 +24,35 @@ struct FeedView: View {
         NavigationView {
 
             VStack {
+                
+                HStack() {
+                    
+                    Picker(selection: $feedViewModel.currentCountry, label: EmptyView()) {
+                        ForEach(0..<self.feedViewModel.countries.count) { index in
+                            Text(self.feedViewModel.country(for: index))
+                                .tag(index)
+//                                .font(.subheadline)
+                        }
+                    }.pickerStyle(SegmentedPickerStyle())
+                        .fixedSize(horizontal: true, vertical: false)
+                        .padding(.leading, 20)
+                    
+                    Spacer()
+                }
+                
 
+                Spacer()
+                
                 if self.feedViewModel.isStatusMessageShown {
                     Text(self.feedViewModel.statusMessage)
                         .font(.footnote)
                 }
 
-                if self.feedViewModel.predicate != nil {
-                    Text("predicate: \(self.feedViewModel.predicate!)")
-                }
-
-                Text("\(self.feedViewModel.filteredCount) total.")
+//                if self.feedViewModel.predicate != nil {
+//                    Text("predicate: \(self.feedViewModel.predicate!)")
+//                }
+//
+//                Text("\(self.feedViewModel.filteredCount) total.")
                 
 
                 Spacer()
