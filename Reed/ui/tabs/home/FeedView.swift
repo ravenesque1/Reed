@@ -34,7 +34,7 @@ struct FeedView: View {
                     Text("predicate: \(self.feedViewModel.predicate!)")
                 }
 
-                Text("\(self.feedViewModel.filteredCount) visible.")
+                Text("\(self.feedViewModel.filteredCount) total.")
                 
 
                 Spacer()
@@ -65,7 +65,7 @@ struct FeedView: View {
 
                     VStack {
                         //navigation link
-                        NavigationLink(destination: ArticleView(articleViewModel: self.feedViewModel.createViewModel(for: article, index: idx))) {
+                        NavigationLink(destination: ArticleView(articleViewModel: self.feedViewModel.articleViewModel(at: idx, article: article))) {
 
                             //ordinarily, the "tap here!" struct would go here, but the
                             //NavigationLink comes with a (here unwanted) disclosure indicator
@@ -83,15 +83,15 @@ struct FeedView: View {
                                 //                                let count = self.feedViewModel.filteredCount
 
                                 self.feedViewModel.filteredCount = count
+                                print(">>>✨WELCOME at index \(idx)! article with title \n\n\(article.title)")
 
                                 //2-...load more items if end of list is reached
                                 if idx == count - 1 {
                                     print("Info: Loading more headlines")
                                     self.feedViewModel.loadMoreAmericanTopHeadlinesWithCategory()
                                 }
-
-                                let cellViewModel = self.feedViewModel.articleViewModel(at: idx, article: article).articleImageViewModel
-                                cellViewModel.loadImage()
+                                
+                                self.feedViewModel.loadImage(for: article, at: idx)
                             })
                     }
 

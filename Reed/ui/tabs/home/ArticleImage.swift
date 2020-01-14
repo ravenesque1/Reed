@@ -40,9 +40,14 @@ struct ArticleImage: View {
                         if !articleImageViewModel.hasImageData() {
                             if articleImageViewModel.hasImageUrl() {
                                 
-                                //note: if a url is not https, it will not be fetched
-                                Text("Can't get picture at \(articleImageViewModel.urlToImage!)")
+                                if articleImageViewModel.isInsecure() {
+                                    Text("URL is insecure and will not fetch:\n\n \(articleImageViewModel.urlToImage!)")
                                     .foregroundColor(Color.red)
+                                    .bold()
+                                } else {
+                                    Text("Can't get picture at \(articleImageViewModel.urlToImage!)")
+                                    .foregroundColor(Color.red)
+                                }
                             } else {
                                 Text("No url to fetch picture provided.")
                                     .foregroundColor(Color.blue)

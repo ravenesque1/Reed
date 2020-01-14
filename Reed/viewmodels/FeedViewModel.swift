@@ -14,7 +14,14 @@ class FeedViewModel: ReedViewModel {
     
     //view model for each article
     //TODO: adding @Published here blows things up
-    private var articleViewModels = [Int: ArticleViewModel]()
+    private var articleViewModels = [Int: ArticleViewModel]() {
+        didSet {
+            
+            print(">>>contains \(self.articleViewModels.values.count) view models")
+            
+        }
+    }
+    
     
     //true result count for "infinite" scroll
     var totalFeedLength: Int = 0
@@ -30,6 +37,7 @@ class FeedViewModel: ReedViewModel {
 
     @Published var currentCategory = 0 {
         didSet {
+            self.resetFilter()
             self.loadAmericanTopHeadlinesWithCategory()
         }
     }
@@ -210,6 +218,7 @@ extension FeedViewModel {
                 }
 
 //                self.objectWillChange.send()
+                print(">>>⚠️ SYNC BEING PERFORMED.")
                 CoreDataStack.shared.silentSafeSync(items: response.articles)
                 self.totalFeedLength = response.totalResults
             })
@@ -225,8 +234,13 @@ extension FeedViewModel {
     func deleteAllArticles() {
         CoreDataStack.shared.deleteAllManagedObjectsOfEntityName("Article")
         
+        resetFilter()
+    }
+
+    func resetFilter() {
         //remove all view models for the cells
         articleViewModels.removeAll()
+        print(">>>⚠️ ALL VIEW MODELS DELETED")
         
         //reset total number of posts
         totalFeedLength = 0
@@ -235,10 +249,6 @@ extension FeedViewModel {
         feedPage = 1
 
         filteredCount = 0
-    }
-
-    func resetFilter() {
-
     }
 }
 
@@ -249,11 +259,29 @@ extension FeedViewModel {
         
         articleViewModels[index] = viewModel
         
+        print("⛔️ made new view model since cached not found at index \(index).")
         return viewModel
     }
     
     func articleViewModel(at index: Int, article: Article) -> ArticleViewModel {
+        
+        print("/* looking for view model at index \(index) */")
+        
+        if let _ = articleViewModels[index] {
+            print("✅ found cached view model at index \(index)!")
+        }
         return articleViewModels[index] ?? createViewModel(for: article, index: index)
+    }
+    
+    func loadImage(for article:Article, at index: Int) {
+        
+        //an array of references (classes instead of a struct) will
+        //not emit a change, as the array itself did not change, thus
+        //a manual trigger is necessary
+        self.objectWillChange.send()
+        
+        let cellViewModel = articleViewModel(at: index, article: article).articleImageViewModel
+        cellViewModel.loadImage()
     }
     
 //    func togglePredicate() {

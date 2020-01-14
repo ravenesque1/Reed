@@ -55,6 +55,17 @@ extension ArticleImageViewModel {
         return urlToImage != nil
     }
     
+    func isInsecure() -> Bool {
+        
+        var isInsecure = true
+        
+        if let urlString = urlToImage?.absoluteString {
+            isInsecure = !urlString.hasPrefix("https")
+        }
+        
+        return isInsecure
+    }
+    
     func imageFromData() -> UIImage? {
         
         if let imageData = article.imageData, let created = UIImage(data: imageData) {
