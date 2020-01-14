@@ -13,15 +13,7 @@ import SwiftUI
 class FeedViewModel: ReedViewModel {
     
     //view model for each article
-    //TODO: adding @Published here blows things up
-    private var articleViewModels = [Int: ArticleViewModel]() {
-        didSet {
-            
-            print(">>>contains \(self.articleViewModels.values.count) view models")
-            
-        }
-    }
-    
+    private var articleViewModels = [Int: ArticleViewModel]()
     
     //true result count for "infinite" scroll
     var totalFeedLength: Int = 0
@@ -32,25 +24,32 @@ class FeedViewModel: ReedViewModel {
     //current page user is on
     var feedPage: Int = 1
     
-    //filtering categories
+    //MARK: - Filtering
+    
+    @Published var predicate: NSPredicate?
+    @Published var feedNavigationTitle: String = "Top Posts in America"
+    @Published var filteredCount: Int = 0
+    
+    //MARK: By Category
+    
     var categoryFilterKey = "category"
     
     var categoryFilterValue: String {
         return categories[currentCategory]
     }
-
+    
     @Published var currentCategory = 0 {
         didSet {
             self.resetFilter()
-            self.loadAmericanTopHeadlinesWithCategory()
+            self.loadArticlesWithCategoryAndCountry()
         }
     }
-
+    
     var categories = ["all", "business", "entertainment", "science"]
     
     
+    //MARK: - By Country
     
-    //filtering countries
     var countryFilterKey = "country"
     
     var countryFilterValue: String {
@@ -64,23 +63,18 @@ class FeedViewModel: ReedViewModel {
     var countries: [String] {
         return Array(countryFlagDict.keys)
     }
+    
     @Published var currentCountry = 0 {
         didSet {
             self.resetFilter()
-            self.loadAmericanTopHeadlinesWithCategory()
+            self.loadArticlesWithCategoryAndCountry()
         }
     }
-    
-
-    @Published var predicate: NSPredicate?
-    @Published var feedNavigationTitle: String = "Top Posts in America"
-    @Published var filteredCount: Int = 0
     
     override init() {
         super.init()
         
-//        loadTopHeadlinesFromAmerica()
-        loadAmericanTopHeadlinesWithCategory()
+        loadArticlesWithCategoryAndCountry()
     }
     
     //MARK: Preview
@@ -93,88 +87,70 @@ class FeedViewModel: ReedViewModel {
 //MARK: - Top Headlines
 extension FeedViewModel {
     
-//    func loadGlobalTopHeadlines() {
-//        feedNavigationTitle = "Top Posts Everywhere"
-//
-//        loadTopHeadlines(fromCategory: self.filterValue)
-//    }
-//
-//    func loadMoreGlobalTopHeadlines() {
-//        incrementPage()
-//        loadGlobalTopHeadlines()
-//    }
-//
-//    func loadTopHeadlinesFromAmerica() {
-//        feedNavigationTitle = "Top Posts in America"
-//        loadTopHeadlines(from: self.filterValue)
-//    }
-//
-//    func loadMoreTopHeadlinesFromAmerica() {
-//        incrementPage()
-//        loadTopHeadlinesFromAmerica()
-//    }
+    func loadArticlesWithCategoryAndCountry() {
+        
+        setPredicate()
+        let modifiedCategory = categoryForRequest()
+        loadTopHeadlines(from: countryFilterValue,
+                         fromCategory: modifiedCategory)
+    }
     
-
-    func loadAmericanTopHeadlinesWithCategory() {
-
-
-
+    func loadMoreArticlesWithCategoryAndCountry() {
+        incrementPage()
+        loadArticlesWithCategoryAndCountry()
+    }
+    
+    func country(for idx: Int) -> String {
+        return countryFlagDict[countries[idx]]!
+    }
+    
+    private func setPredicate() {
+        
         //"all" is not a category (but "general" is!)
-        let trueCurrent = self.categories[self.currentCategory]
-
-        var category: String? = "general"
-
-        if trueCurrent != "all" {
+        if categoryFilterValue != "all" {
             predicate = NSPredicate(format: "%K BEGINSWITH %@ AND %K BEGINSWITH %@",
                                     categoryFilterKey,
                                     categoryFilterValue,
-            countryFilterKey,
-            countryFilterValue)
-            category = trueCurrent
+                                    countryFilterKey,
+                                    countryFilterValue)
         } else {
             //we still want to filter by country even though we aren't filtering by category
             predicate = NSPredicate(format: "%K BEGINSWITH %@" ,
-            countryFilterKey,
-            countryFilterValue)
+                                    countryFilterKey,
+                                    countryFilterValue)
         }
-
-        loadTopHeadlines(from: countryFilterValue,
-                         fromCategory: category)
-
-//        loadTopHeadlines(fromCategory: self.categories[currentCategory])
-    }
-
-    func loadMoreAmericanTopHeadlinesWithCategory() {
-        incrementPage()
-        loadAmericanTopHeadlinesWithCategory()
     }
     
     private func incrementPage() {
         let maxDisplayableArticleCount = feedPage * feedPageSize
         
         guard maxDisplayableArticleCount < totalFeedLength else {
-            print("Info: Reached end of infinite scroll.")
             return
         }
         
         feedPage += 1
+    }
+    
+    private func categoryForRequest() -> String {
+        if categoryFilterValue == "all" {
+            return "general"
+        }
         
-        
-        print("Info: Scrolling to page \(feedPage)...")
+        return categoryFilterValue
     }
     
     
-    func loadTopHeadlinesWithSources(_ sources: [String],
-                                     query: String? = nil) {
+    private func loadTopHeadlinesWithSources(_ sources: [String],
+                                             query: String? = nil) {
         
         let sources = [TopHeadlineRequiredParameters.sources(sources)]
         
         performTopHeadlinesRequest(requiredParams: sources, query: query)
     }
     
-    func loadTopHeadlines(from country: String? = nil,
-                          fromCategory: String? = nil,
-                          query: String? = nil) {
+    private func loadTopHeadlines(from country: String? = nil,
+                                  fromCategory: String? = nil,
+                                  query: String? = nil) {
         
         var requiredParams: [TopHeadlineRequiredParameters] = []
         
@@ -185,7 +161,7 @@ extension FeedViewModel {
         if let category = fromCategory {
             requiredParams += [TopHeadlineRequiredParameters.category(category)]
         }
-
+        
         performTopHeadlinesRequest(requiredParams: requiredParams, query: query)
     }
 }
@@ -195,21 +171,17 @@ extension FeedViewModel {
     
     /*
      Performs any request that returns a TopHeadlinesResponseObject, saving the articles to Core Data
-    
+     
      Note: page = 1 is the equivalent of adding no page parameter at all
-    */
+     */
     private func performTopHeadlinesRequest(requiredParams: [TopHeadlineRequiredParameters],
                                             query: String? = nil) {
-
+        
         //perform UI changes on the main thread
-
-        self.objectWillChange.send()
-
         DispatchQueue.main.async {
             self.statusMessage = "loading headlines..."
             self.isStatusMessageShown = true
             self.filteredCount = 0
-            print(">>>loading headline... \(requiredParams)")
         }
         
         let topHeadlines = NewsWebService.topHeadlines(query: query,
@@ -217,8 +189,7 @@ extension FeedViewModel {
                                                        pageSize: self.feedPageSize,
                                                        requiredParameters: requiredParams)
             .sink(receiveCompletion: { completion in
-
-//                 self.objectWillChange.send()
+                
                 self.isStatusMessageShown = false
                 switch completion {
                 case .finished:
@@ -231,7 +202,7 @@ extension FeedViewModel {
             }, receiveValue: { response in
                 
                 response.articles.forEach{ maybeArticle in
-                 
+                    
                     guard let article = maybeArticle.value else { return }
                     
                     for param in requiredParams {
@@ -247,9 +218,6 @@ extension FeedViewModel {
                     }
                     
                 }
-
-//                self.objectWillChange.send()
-                print(">>>⚠️ SYNC BEING PERFORMED.")
                 CoreDataStack.shared.silentSafeSync(items: response.articles)
                 self.totalFeedLength = response.totalResults
             })
@@ -267,18 +235,17 @@ extension FeedViewModel {
         
         resetFilter()
     }
-
+    
     func resetFilter() {
         //remove all view models for the cells
         articleViewModels.removeAll()
-        print(">>>⚠️ ALL VIEW MODELS DELETED")
         
         //reset total number of posts
         totalFeedLength = 0
         
         //reset the feed page
         feedPage = 1
-
+        
         filteredCount = 0
     }
 }
@@ -290,17 +257,10 @@ extension FeedViewModel {
         
         articleViewModels[index] = viewModel
         
-        print("⛔️ made new view model since cached not found at index \(index).")
         return viewModel
     }
     
     func articleViewModel(at index: Int, article: Article) -> ArticleViewModel {
-        
-        print("/* looking for view model at index \(index) */")
-        
-        if let _ = articleViewModels[index] {
-            print("✅ found cached view model at index \(index)!")
-        }
         return articleViewModels[index] ?? createViewModel(for: article, index: index)
     }
     
@@ -314,17 +274,6 @@ extension FeedViewModel {
         let cellViewModel = articleViewModel(at: index, article: article).articleImageViewModel
         cellViewModel.loadImage()
     }
-    
-    func country(for idx: Int) -> String {
-        return countryFlagDict[countries[idx]]!
-    }
-    
-//    func togglePredicate() {
-//        self.objectWillChange.send()
-////        self.filterKey = filterKey == "country" ? "category" : "country"
-//        self.filterValue = filterValue == "business" ? "general" : "business"
-//        loadGlobalTopHeadlines()
-//    }
 }
 
 

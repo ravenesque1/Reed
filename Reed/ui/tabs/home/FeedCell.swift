@@ -14,12 +14,14 @@ struct FeedCell: View {
     
     var body: some View {
         
+        //0- ZStack places article information in front of image
         return ZStack {
             
+            //1- image
             ArticleImage(articleImageViewModel: articleViewModel.articleImageViewModel)
                 .imageOpacity(0.4)
             
-            
+            //2- article information
             HStack {
                 VStack(alignment: .leading) {
                     
@@ -30,23 +32,11 @@ struct FeedCell: View {
                     Text(articleViewModel.article.title)
                         .font(.headline)
                     
-//                    HStack {
-//                        Text(articleViewModel.article.author)
-//                            .fontWeight(.bold)
-//                            .lineLimit(1)
-                        
-                        if articleViewModel.hasTimeAgoString {
-                            Text(articleViewModel.timeAgoString!)
-                                .italic()
+                    if articleViewModel.hasTimeAgoString {
+                        Text(articleViewModel.timeAgoString!)
+                            .italic()
                             .font(.caption)
-                        }
-//                    }
-                    
-                    
-//                    if articleViewModel.article.summary != nil {
-//                        Text(articleViewModel.article.summary!)
-//                            .font(.body)
-//                    }
+                    }
                 }
                 .padding(.leading, 10)
                 .padding(.bottom, 10)

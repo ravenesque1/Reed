@@ -12,13 +12,13 @@ class ArticleImageViewModel: ReedViewModel {
     
     @Published var article: Article
     @Published var loadedImage: Bool = false
-
+    
     var index: Int
     
     var image: UIImage? {
         return imageFromData()
     }
-
+    
     var imageData: Data? {
         return article.imageData
     }
@@ -40,7 +40,7 @@ class ArticleImageViewModel: ReedViewModel {
         article.summary = "A quick summary"
         article.author = "Some girl"
         article.publishedAt = Date()
-
+        
         return ArticleImageViewModel(article: article, index: 0)
     }
 }
@@ -73,7 +73,7 @@ extension ArticleImageViewModel {
         }
         return nil
     }
-
+    
     //asynchronously loads an article's image
     func loadImage() {
         
@@ -91,24 +91,24 @@ extension ArticleImageViewModel {
         }
         
         let loadImage = NewsWebService.loadImage(url: imageUrl)
-                   .sink(receiveCompletion: { completion in
-                    
-                    self.objectWillChange.send()
-                    self.loadedImage = true
-                    
-                       switch completion {
-                       case .finished:
-                           self.isErrorShown = false
-                           break
-                       case .failure(let error):
-                           self.errorMessage = error.localizedDescription
-                           self.isErrorShown = true
-                           print("Error: Failed to download image for \(self.index): \(self.errorMessage)")
-                       }
-                   }, receiveValue: { response in
-                        CoreDataStack.shared.saveImageData(response, to: self.article.objectID)
-                   })
-               
-               loadImage.cancel(with: self.cancelBag)
+            .sink(receiveCompletion: { completion in
+                
+                self.objectWillChange.send()
+                self.loadedImage = true
+                
+                switch completion {
+                case .finished:
+                    self.isErrorShown = false
+                    break
+                case .failure(let error):
+                    self.errorMessage = error.localizedDescription
+                    self.isErrorShown = true
+                    print("Error: Failed to download image for \(self.index): \(self.errorMessage)")
+                }
+            }, receiveValue: { response in
+                CoreDataStack.shared.saveImageData(response, to: self.article.objectID)
+            })
+        
+        loadImage.cancel(with: self.cancelBag)
     }
 }

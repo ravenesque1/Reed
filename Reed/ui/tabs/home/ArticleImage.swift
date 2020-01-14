@@ -12,19 +12,14 @@ struct ArticleImage: View {
     
     @ObservedObject var articleImageViewModel: ArticleImageViewModel
     
-    //    var imageData: Data?
-    //    var urlToImage: URL?
     var opacity: Double = 1.0
-
+    
     init(articleImageViewModel: ArticleImageViewModel) {
         self.articleImageViewModel = articleImageViewModel
-
-//        self.articleImageViewModel.loadImage(url: self.article.url, idx: index)
     }
     
     var body: some View {
         
-        //zstack brings message in front of image
         return ZStack {
             
             //float message to the top of view
@@ -42,11 +37,11 @@ struct ArticleImage: View {
                                 
                                 if articleImageViewModel.isInsecure() {
                                     Text("URL is insecure and will not fetch:\n\n \(articleImageViewModel.urlToImage!)")
-                                    .foregroundColor(Color.red)
-                                    .bold()
+                                        .foregroundColor(Color.red)
+                                        .bold()
                                 } else {
                                     Text("Can't get picture at \(articleImageViewModel.urlToImage!)")
-                                    .foregroundColor(Color.red)
+                                        .foregroundColor(Color.red)
                                 }
                             } else {
                                 Text("No url to fetch picture provided.")
@@ -70,7 +65,7 @@ struct ArticleImage: View {
                 .aspectRatio(contentMode: .fill)
                 .opacity(articleImageViewModel.image == nil ? 0.4 : self.opacity)
                 .clipped()
-
+            
             Spacer()
         }
     }

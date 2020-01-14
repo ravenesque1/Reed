@@ -20,7 +20,7 @@ class ArticleViewModel: ReedViewModel {
     var hasTimeAgoString: Bool {
         return timeAgoString != nil
     }
-
+    
     @Published var article: Article
     @Published var showPreview = false
     @Published var previewButtonTitle: String = "Show Preview"
@@ -39,7 +39,7 @@ class ArticleViewModel: ReedViewModel {
         article.summary = "A quick summary"
         article.author = "Some girl"
         article.publishedAt = Date()
-
+        
         return ArticleViewModel(article: article, index: 0)
     }
     
@@ -55,14 +55,14 @@ class ArticleViewModel: ReedViewModel {
 }
 
 extension ArticleViewModel {
-
+    
     func openInSafari() {
         UIApplication.shared.open(article.url)
     }
-
+    
     //toggles the visibility of preview
     func toggleViewSource() {
-
+        
         //when an ObservableObject is a class (rather than a struct),
         //it is pass by REFERENCE, not VALUE. As such, when a property
         //changes, the object doesn't emit a "change", thus the change
