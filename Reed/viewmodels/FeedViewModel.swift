@@ -8,7 +8,6 @@
 
 import Foundation
 import Combine
-import SwiftUI
 
 class FeedViewModel: ReedViewModel {
     
@@ -45,7 +44,7 @@ class FeedViewModel: ReedViewModel {
         }
     }
     
-    var categories = ["all", "business", "entertainment", "science"]
+    var categories = ["all", "business", "entertainment", "science", "sports"]
     
     
     //MARK: - By Country
@@ -58,7 +57,8 @@ class FeedViewModel: ReedViewModel {
     
     var countryFlagDict = [ "us": "🇺🇸" ,
                             "gb": "🇬🇧",
-                            "cn":"🇨🇳"]
+                            "cn":"🇨🇳",
+                            "ca": "🇨🇦"]
     
     var countries: [String] {
         return Array(countryFlagDict.keys)

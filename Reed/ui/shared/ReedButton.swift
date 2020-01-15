@@ -23,11 +23,23 @@ struct ReedButton: View {
         Button(action: {
             self.action()
         }) {
-            Text(title)
-                .frame(minWidth: minWidth, maxWidth: maxWidth)
-                .padding()
-                .background(color)
-                .foregroundColor(Color.white)
+            if inverted {
+                Text(title)
+                    .frame(minWidth: minWidth, maxWidth: maxWidth)
+                    .padding()
+                    .foregroundColor(Color.white)
+                    .background(color)
+                    .cornerRadius(cornerRadius)
+            } else {
+                Text(title)
+                    .frame(minWidth: minWidth, maxWidth: maxWidth)
+                    .padding()
+                    .foregroundColor(color)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: cornerRadius)
+                            .stroke(color, lineWidth: lineWidth)
+                )
+            }
         }
     }
 }

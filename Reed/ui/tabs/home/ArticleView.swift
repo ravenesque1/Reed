@@ -21,7 +21,6 @@ struct ArticleView: View {
                     .font(.headline)
                 Text(articleViewModel.article.publishedAtPretty())
                     .font(.caption)
-                
             }
             .align(.leading)
             
