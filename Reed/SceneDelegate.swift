@@ -23,8 +23,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         // Create the SwiftUI view that provides the window contents.
         let contentView = ContentView()
+            
             //environmentObject is used for arbitrary (aka developer-defined) information
             .environmentObject(settings)
+            
             //environment is used for system-defined things, like core data information here
             .environment(\.managedObjectContext, context)
 

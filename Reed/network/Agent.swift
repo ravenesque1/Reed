@@ -22,8 +22,7 @@ struct Agent {
             .tryMap { result -> Response<Data> in
                 return Response(value: result.data, response: result.response)
         }
-//        .receive(on: DispatchQueue.global())
-            .receive(on: DispatchQueue.main)
+        .receive(on: DispatchQueue.main)
         .eraseToAnyPublisher()
     }
     
@@ -50,8 +49,8 @@ struct Agent {
                 return Response(value: value, response: result.response)
         }
         .receive(on: DispatchQueue.main)
-        
-        //make generic by returning as instance of AnyPublisher
-        .eraseToAnyPublisher()
+            
+            //make generic by returning as instance of AnyPublisher
+            .eraseToAnyPublisher()
     }
 }

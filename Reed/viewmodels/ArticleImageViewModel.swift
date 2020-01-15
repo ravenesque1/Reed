@@ -77,9 +77,11 @@ extension ArticleImageViewModel {
     //asynchronously loads an article's image
     func loadImage() {
         
-        guard let imageUrl = article.urlToImage, article.imageData == nil else {
+        guard let imageUrl = article.urlToImage,
+            article.imageData == nil,
+            !isInsecure() else {
             
-            if article.imageData != nil {
+            if article.imageData != nil || isInsecure() {
                 self.objectWillChange.send()
                 self.loadedImage = true
             }

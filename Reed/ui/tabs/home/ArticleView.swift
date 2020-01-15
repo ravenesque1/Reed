@@ -102,7 +102,7 @@ struct ArticleView: View {
 #if DEBUG
 struct ArticleView_Previews: PreviewProvider {
     static var previews: some View {
-        ArticleView(articleViewModel: ArticleViewModel.sample())
+        ArticleView(articleViewModel: ArticleViewModel.longSample())
             .environment(\.managedObjectContext, CoreDataStack.shared.persistentContainer.viewContext)
     }
 }
