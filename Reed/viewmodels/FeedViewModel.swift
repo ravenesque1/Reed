@@ -71,6 +71,14 @@ class FeedViewModel: ReedViewModel {
         }
     }
     
+    override var isLoading: Bool {
+        didSet {
+            if oldValue == false && isLoading == true {
+                loadArticlesWithCategoryAndCountry()
+            }
+        }
+    }
+    
     override init() {
         super.init()
         
@@ -191,6 +199,8 @@ extension FeedViewModel {
             .sink(receiveCompletion: { completion in
                 
                 self.isStatusMessageShown = false
+                self.isLoading = false
+                
                 switch completion {
                 case .finished:
                     self.isErrorShown = false

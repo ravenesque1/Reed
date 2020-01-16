@@ -23,6 +23,7 @@ struct OnboardingView: View {
                     ReedButton(
                         color: .blue,
                         title: "login",
+                        inverted: true,
                         action: {
                             self.userAuth.isLoggedIn = true
                     })
