@@ -14,8 +14,6 @@ class ReedViewModel: ObservableObject {
     let cancelBag = CancelBag()
 
     @Published var isLoading = false
-    @Published var statusMessage = ""
-    @Published var isStatusMessageShown = false
     @Published var isErrorShown = false
     @Published var errorMessage = ""
 }

@@ -21,7 +21,11 @@ class UserSettings: ObservableObject {
     init() {
         self.updateLoggedIn()
     }
+}
 
+//MARK: Authentication
+extension UserSettings {
+    
     func login() {
         UserDefaults.standard.set(true, forKey: Setting.loggedIn.rawValue)
         self.updateLoggedIn()

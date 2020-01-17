@@ -54,14 +54,13 @@ extension CoreDataStack {
     }
     
     //syncs "Safe" items, removing corrupted ones in the process
-    func safeSync<T: Manageable>(items: [Safe<T>]) -> (Bool, Int) {
+    func safeSync<T: Manageable>(items: [Safe<T>]) -> Bool {
         var successful = false
-        var safeCount = 0
         
         viewContext.performAndWait {
             
             //0 - items put into context upon decoding, so remove Safe.value == nil
-            safeCount = removeCorrputed(ofType: T.self)
+            removeCorrputed(ofType: T.self)
             
             //1 - save insertion from decoding and corrpution removal
             do {
@@ -72,7 +71,7 @@ extension CoreDataStack {
             
             successful = true
         }
-        return (successful, safeCount)
+        return successful
     }
     
     //MARK: Saving Context without "Safe" items pending
@@ -192,7 +191,7 @@ extension CoreDataStack {
 extension CoreDataStack {
     
     ///when Safe managed objects are used, this method removes the nil objects created
-    func removeCorrputed<T: Manageable>(ofType: T.Type) -> Int {
+    func removeCorrputed<T: Manageable>(ofType: T.Type) {
         viewContext.insertedObjects
             .compactMap { $0 as? T }
             .filter { $0.id is String }
@@ -202,8 +201,6 @@ extension CoreDataStack {
                 viewContext.delete(item)
                 }
         }
-        
-        return viewContext.insertedObjects.compactMap { $0 as? T }.count
     }
     
     ///deletes all articles and saves changes

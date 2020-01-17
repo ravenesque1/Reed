@@ -13,20 +13,10 @@ class FeedViewModel: ReedViewModel {
     //view model for each article
     private var articleViewModels = [Int: ArticleViewModel]()
     
+    ///determines if an empty state message will be shown at all
+    @Published var totalFeedLength: Int = 0
     
-    @Published var totalFeedLength: Int = 0 {
-        didSet {
-            print("hello")
-        }
-    }
-    
-    //true result count for "infinite" scroll
-    @Published var totalVisible: Int = 0 {
-        didSet {
-            print("hello")
-        }
-    }
-    
+    ///should the "reached the end" message be shown
     @Published var showEnd: Bool = false {
         willSet {
             self.objectWillChange.send()
@@ -39,6 +29,25 @@ class FeedViewModel: ReedViewModel {
     //current page user is on
     var feedPage: Int = 1
     
+    ///what the FilteredList binds to for data display
+    override var isLoading: Bool {
+        didSet {
+            if oldValue == false && isLoading && !isRefreshingFeed {
+                loadArticlesWithCategoryAndCountry()
+            } else if isRefreshingFeed {
+                isRefreshingFeed = false
+                isLoading = false
+            }
+        }
+    }
+    
+    ///toggles between a loading message and an empty state message
+    var showLoadingMessage: Bool = true
+    
+    //don't hit API if feed is just being refreshed,
+    //like from a cache clearing
+    var isRefreshingFeed: Bool = false
+    
     //MARK: - Filtering
     
     @Published var predicate: NSPredicate? {
@@ -47,7 +56,6 @@ class FeedViewModel: ReedViewModel {
         }
     }
     @Published var feedNavigationTitle: String = "Top Posts in America"
-    @Published var filteredCount: Int = 0
     
     //MARK: By Category
     
@@ -56,7 +64,6 @@ class FeedViewModel: ReedViewModel {
     var categoryFilterValue: String {
         return categories[currentCategory]
     }
-    
     
     var categoryIconDict = ["all": "🌍",
                             "business": "💼",
@@ -75,25 +82,18 @@ class FeedViewModel: ReedViewModel {
         }
     }
     
-    var categories = ["all", "business", "entertainment", "science", "sports"]
+    var categories: [String] {
+        return Array(categoryIconDict.keys).sorted()
+    }
     
+    ///toggles the category ActionSheet
     @Published var showCategoryOptions: Bool = false {
         willSet {
             self.objectWillChange.send()
         }
     }
     
-    func categoryIdx(from category: String) -> Int {
-        return categories.firstIndex(of: category)!
-    }
-    
-    func setCategory(_ category: String) {
-        let newCategory = categoryIdx(from: category)
-        currentCategory = newCategory
-    }
-    
-    
-    //MARK: - By Country
+    //MARK: By Country
     
     var countryFilterKey = "country"
     
@@ -127,32 +127,6 @@ class FeedViewModel: ReedViewModel {
         }
     }
     
-    func countryIdx(from country: String) -> Int {
-           return countries.firstIndex(of: country)!
-       }
-       
-       func setCountry(_ country: String) {
-           let newCountry = countryIdx(from: country)
-           currentCountry = newCountry
-       }
-    
-    override var isLoading: Bool {
-        didSet {
-            if oldValue == false && isLoading && !isRefreshingFeed {
-                loadArticlesWithCategoryAndCountry()
-            } else if isRefreshingFeed {
-                isRefreshingFeed = false
-                isLoading = false
-            }
-        }
-    }
-    
-    var showLoadingMessage: Bool = true
-    
-    //don't hit API if feed is just being refreshed,
-    //like from a cache clearing
-    var isRefreshingFeed: Bool = false
-    
     override init() {
         super.init()
         
@@ -168,66 +142,6 @@ class FeedViewModel: ReedViewModel {
 
 //MARK: - Top Headlines
 extension FeedViewModel {
-    
-    func loadArticlesWithCategoryAndCountry() {
-        
-        setPredicate()
-        let modifiedCategory = categoryForRequest()
-        loadTopHeadlines(from: countryFilterValue,
-                         fromCategory: modifiedCategory)
-    }
-    
-    func loadMoreArticlesWithCategoryAndCountry() {
-        
-        let pageIncremented = tryIncrementPage()
-        
-        if pageIncremented {
-            loadArticlesWithCategoryAndCountry()
-        }
-    }
-    
-    func country(for idx: Int) -> String {
-        return countryFlagDict[countries[idx]]!
-    }
-    
-    private func setPredicate() {
-        
-        //"all" is not a category (but "general" is!)
-        if categoryFilterValue != "all" {
-            predicate = NSPredicate(format: "%K BEGINSWITH %@ AND %K BEGINSWITH %@",
-                                    categoryFilterKey,
-                                    categoryFilterValue,
-                                    countryFilterKey,
-                                    countryFilterValue)
-        } else {
-            //we still want to filter by country even though we aren't filtering by category
-            predicate = NSPredicate(format: "%K BEGINSWITH %@" ,
-                                    countryFilterKey,
-                                    countryFilterValue)
-        }
-    }
-    
-    private func tryIncrementPage() -> Bool {
-        
-        let maxDisplayableArticleCount = feedPage * feedPageSize
-        
-        guard maxDisplayableArticleCount < totalFeedLength else {
-            return false
-        }
-        
-        feedPage += 1
-        return true
-    }
-    
-    func canIncrementPage() -> Bool {
-        let maxDisplayableArticleCount = feedPage * feedPageSize
-        
-        guard maxDisplayableArticleCount < totalFeedLength else {
-            return false
-        }
-        
-        return true
-    }
     
     private func categoryForRequest() -> String {
         if categoryFilterValue == "all" {
@@ -264,7 +178,7 @@ extension FeedViewModel {
     }
 }
 
-//MARK: - Fetching
+//MARK: - NewsWebService Requests
 extension FeedViewModel {
     
     /*
@@ -277,14 +191,8 @@ extension FeedViewModel {
         
         //perform UI changes on the main thread
         DispatchQueue.main.async {
-            self.statusMessage = "loading headlines..."
-            self.isStatusMessageShown = true
-            self.filteredCount = 0
             self.showLoadingMessage = true
         }
-        
-        print(">>> loading page \(self.feedPage)")
-        print("\n\n\npredicate: \(predicate.debugDescription)\n\n\n")
         
         let topHeadlines = NewsWebService.topHeadlines(query: query,
                                                        page: self.feedPage,
@@ -292,7 +200,6 @@ extension FeedViewModel {
                                                        requiredParameters: requiredParams)
             .sink(receiveCompletion: { completion in
                 
-                self.isStatusMessageShown = false
                 self.isLoading = false
                 self.showLoadingMessage = false
                 
@@ -305,9 +212,6 @@ extension FeedViewModel {
                     self.isErrorShown = true
                 }
             }, receiveValue: { response in
-                
-                print(">>> total results: \(response.totalResults)")
-                print(">>> received: \(response.articles.count)")
                 
                 response.articles.forEach{ maybeArticle in
                     
@@ -324,9 +228,8 @@ extension FeedViewModel {
                             break
                         }
                     }
-                    
                 }
-                self.totalVisible = CoreDataStack.shared.safeSync(items: response.articles).1
+                CoreDataStack.shared.silentSafeSync(items: response.articles)
                 self.totalFeedLength = response.totalResults
             })
         
@@ -334,15 +237,25 @@ extension FeedViewModel {
     }
 }
 
-//MARK: - Deletion
-
+//MARK: - Filter Management
 extension FeedViewModel {
     
-//    func deleteAllArticles() {
-//        CoreDataStack.shared.deleteAllManagedObjectsOfEntityName("Article")
-//
-//        resetFilter()
-//    }
+    private func setPredicate() {
+        
+        //"all" is not a category (but "general" is!)
+        if categoryFilterValue != "all" {
+            predicate = NSPredicate(format: "%K BEGINSWITH %@ AND %K BEGINSWITH %@",
+                                    categoryFilterKey,
+                                    categoryFilterValue,
+                                    countryFilterKey,
+                                    countryFilterValue)
+        } else {
+            //we still want to filter by country even though we aren't filtering by category
+            predicate = NSPredicate(format: "%K BEGINSWITH %@" ,
+                                    countryFilterKey,
+                                    countryFilterValue)
+        }
+    }
     
     func resetFilter() {
         
@@ -354,25 +267,35 @@ extension FeedViewModel {
         
         //reset the feed page
         feedPage = 1
-        
-        filteredCount = 0
     }
     
+    //MARK: Category ActionSheet
     
-    func refreshFeed() {
-        isRefreshingFeed = true
-        resetFilter()
-        isLoading = true
+    func categoryIdx(from category: String) -> Int {
+        return categories.firstIndex(of: category)!
     }
-}
-
-
-
-//MARK: - Filter Management
-extension FeedViewModel {
+    
+    func setCategory(_ category: String) {
+        let newCategory = categoryIdx(from: category)
+        currentCategory = newCategory
+    }
+    
+    //MARK: Country ActionSheet
+    
+    func countryIdx(from country: String) -> Int {
+        return countries.firstIndex(of: country)!
+    }
+    
+    func setCountry(_ country: String) {
+        let newCountry = countryIdx(from: country)
+        currentCountry = newCountry
+    }
+    
+    //MARK: Display
+    
     func filterPrettyPrinted() -> String? {
         
-        if let country = countryName(countryCode: countryFilterValue) {
+        if let country = countryName(for: countryFilterValue) {
             if categoryForRequest() != "general" {
                 return  "\(country) \(categoryForRequest().capitalized)"
             }
@@ -382,18 +305,13 @@ extension FeedViewModel {
         return nil
     }
     
-    func countryName(countryCode: String) -> String? {
-        let current = Locale(identifier: "en_US")
-        return current.localizedString(forRegionCode: countryCode)
-    }
-    
     func countryNamePrettyPrinted(iso: String) -> String {
         var pretty: String
-
+        
         if let flag = countryFlagDict[iso] {
             pretty = flag
             
-            if let countryName = countryName(countryCode: iso) {
+            if let countryName = countryName(for: iso) {
                 pretty += " \(countryName) "
             }
         } else {
@@ -405,7 +323,7 @@ extension FeedViewModel {
     
     func categoryNamePrettyPrinted(name: String) -> String {
         var pretty: String
-
+        
         if let icon = categoryIconDict[name] {
             pretty = "\(icon) \(name.capitalized)"
         } else {
@@ -414,10 +332,52 @@ extension FeedViewModel {
         
         return pretty
     }
+    
+    private func countryName(for iso: String) -> String? {
+        let current = Locale(identifier: "en_US")
+        return current.localizedString(forRegionCode: iso)
+    }
 }
 
-//MARK: - Article List (aka "Feed") Management
+//MARK: - Feed Management
 extension FeedViewModel {
+    
+    func loadArticlesWithCategoryAndCountry() {
+        
+        setPredicate()
+        let modifiedCategory = categoryForRequest()
+        loadTopHeadlines(from: countryFilterValue,
+                         fromCategory: modifiedCategory)
+    }
+    
+    func loadMoreArticlesWithCategoryAndCountry() {
+        
+        if canIncrementPage() {
+            feedPage += 1
+            loadArticlesWithCategoryAndCountry()
+        }
+    }
+    
+    func refreshFeed() {
+        isRefreshingFeed = true
+        resetFilter()
+        isLoading = true
+    }
+    
+    func canIncrementPage() -> Bool {
+        let maxDisplayableArticleCount = feedPage * feedPageSize
+        
+        guard maxDisplayableArticleCount < totalFeedLength else {
+            return false
+        }
+        
+        return true
+    }
+}
+
+//MARK: Feed Item Management
+extension FeedViewModel {
+    
     func createViewModel(for article: Article, index: Int) -> ArticleViewModel {
         let viewModel = ArticleViewModel(article: article, index: index)
         
