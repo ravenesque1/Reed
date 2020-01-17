@@ -10,6 +10,7 @@ import Combine
 
 class UserSettings: ObservableObject {
      @Published var isLoggedIn : Bool = false
+    @Published var recentlyClearedCache: Bool = false
 }
 
 

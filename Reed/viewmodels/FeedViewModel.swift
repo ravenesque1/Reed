@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Combine
 
 class FeedViewModel: ReedViewModel {
     
@@ -15,7 +14,7 @@ class FeedViewModel: ReedViewModel {
     private var articleViewModels = [Int: ArticleViewModel]()
     
     //true result count for "infinite" scroll
-    var totalFeedLength: Int = 0
+     @Published var totalFeedLength: Int = 0
     
     //size of each page loaded when scrolling
     var feedPageSize: Int = 20
@@ -37,6 +36,16 @@ class FeedViewModel: ReedViewModel {
         return categories[currentCategory]
     }
     
+    var categoryIconDict = ["all": "🌍",
+                            "business": "💼",
+                            "entertainment": "🍿",
+                            "science": "🧬",
+                            "sports": "🏀"]
+    
+    var currentCategoryIcon: String {
+        return categoryIconDict[categoryFilterValue]!
+    }
+    
     @Published var currentCategory = 0 {
         didSet {
             self.resetFilter()
@@ -45,6 +54,21 @@ class FeedViewModel: ReedViewModel {
     }
     
     var categories = ["all", "business", "entertainment", "science", "sports"]
+    
+    @Published var showCategoryOptions: Bool = false {
+        willSet {
+            self.objectWillChange.send()
+        }
+    }
+    
+    func categoryIdx(from category: String) -> Int {
+        return categories.firstIndex(of: category)!
+    }
+    
+    func setCategory(_ category: String) {
+        let newCategory = categoryIdx(from: category)
+        currentCategory = newCategory
+    }
     
     
     //MARK: - By Country
@@ -61,7 +85,11 @@ class FeedViewModel: ReedViewModel {
                             "ca": "🇨🇦"]
     
     var countries: [String] {
-        return Array(countryFlagDict.keys)
+        return Array(countryFlagDict.keys).sorted()
+    }
+    
+    var currentCountryFlag: String {
+        return countryFlagDict[countryFilterValue]!
     }
     
     @Published var currentCountry = 0 {
@@ -70,6 +98,21 @@ class FeedViewModel: ReedViewModel {
             self.loadArticlesWithCategoryAndCountry()
         }
     }
+    
+    @Published var showCountryOptions: Bool = false {
+        willSet {
+            self.objectWillChange.send()
+        }
+    }
+    
+    func countryIdx(from country: String) -> Int {
+           return countries.firstIndex(of: country)!
+       }
+       
+       func setCountry(_ country: String) {
+           let newCountry = countryIdx(from: country)
+           currentCountry = newCountry
+       }
     
     override var isLoading: Bool {
         didSet {
@@ -257,6 +300,54 @@ extension FeedViewModel {
         feedPage = 1
         
         filteredCount = 0
+    }
+}
+
+//MARK: - Filter Management
+extension FeedViewModel {
+    func filterPrettyPrinted() -> String? {
+        
+        if let country = countryName(countryCode: countryFilterValue) {
+            if categoryForRequest() != "general" {
+                return  "\(country) \(categoryForRequest().capitalized)"
+            }
+            return country
+        }
+        
+        return nil
+    }
+    
+    func countryName(countryCode: String) -> String? {
+        let current = Locale(identifier: "en_US")
+        return current.localizedString(forRegionCode: countryCode)
+    }
+    
+    func countryNamePrettyPrinted(iso: String) -> String {
+        var pretty: String
+
+        if let flag = countryFlagDict[iso] {
+            pretty = flag
+            
+            if let countryName = countryName(countryCode: iso) {
+                pretty += " \(countryName) "
+            }
+        } else {
+            pretty = iso
+        }
+        
+        return pretty
+    }
+    
+    func categoryNamePrettyPrinted(name: String) -> String {
+        var pretty: String
+
+        if let icon = categoryIconDict[name] {
+            pretty = "\(icon) \(name.capitalized)"
+        } else {
+            pretty = name
+        }
+        
+        return pretty
     }
 }
 

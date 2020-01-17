@@ -11,6 +11,7 @@ import SwiftUI
 struct SettingsView: View {
     
     @EnvironmentObject var userAuth: UserSettings
+    @ObservedObject private var settingsViewModel = SettingsViewModel()
     
     var body: some View {
         ReedHiddenNavBarView {
@@ -26,11 +27,31 @@ struct SettingsView: View {
                     
                     Spacer()
                     
+                   
+                    
                     ReedButton(color: .red,
-                               title: "logout",
+                               title: "clear cache",
                                action: {
-                                self.userAuth.isLoggedIn = false
+                                self.settingsViewModel.showDeleteConfirmation = true
                     })
+                        .alert(isPresented: self.$settingsViewModel.showDeleteConfirmation) {
+                            
+                            
+                        Alert(title: Text("Are you sure you want to clear the cache?"),
+                        message: Text("This will remove all articles. This action cannot be interrupted or undone."),
+                        primaryButton: .cancel(),
+                        secondaryButton: .destructive(Text("Remove All Articles"), action: {
+                                self.settingsViewModel.deleteAllArticles()
+                              }))
+                    }
+                    
+                    
+                    ReedButton(color: .red,
+                                                  title: "logout",
+                                                  inverted: true,
+                                                  action: {
+                                                   self.userAuth.isLoggedIn = false
+                                       })
                     
                     Spacer()
                     
@@ -41,11 +62,14 @@ struct SettingsView: View {
             }
             .padding()
         }
+    .navigationBarTitle("Settings")
     }
 }
 
+#if DEBUG
 struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
         SettingsView()
     }
 }
+#endif

@@ -12,54 +12,71 @@ import Combine
 struct FeedView: View {
     
     @ObservedObject private var feedViewModel = FeedViewModel()
+    @EnvironmentObject var userAuth: UserSettings
     
     var body: some View {
         NavigationView {
             VStack {
-                //1- country picker
-                HStack() {
-                    
-                    Picker(selection: $feedViewModel.currentCountry, label: EmptyView()) {
-                        ForEach(0..<self.feedViewModel.countries.count) { index in
-                            Text(self.feedViewModel.country(for: index))
-                                .tag(index)
-                            
-                        }
-                    }.pickerStyle(SegmentedPickerStyle())
-                        .fixedSize(horizontal: true, vertical: false)
-                        .padding(.leading, 20)
-                    
-                    Spacer()
+                
+                //factor out
+                if self.feedViewModel.filterPrettyPrinted() != nil {
+                    Text(self.feedViewModel.filterPrettyPrinted()!)
+                    .font(.caption)
+                        .align(.leading)
+                    .padding(.leading, 20)
                 }
                 
+//                Text(self.feedViewModel.predicate?.description ?? "")
+                //1- country picker
+//                HStack() {
+//
+//                    Picker(selection: $feedViewModel.currentCountry, label: EmptyView()) {
+//                        ForEach(0..<self.feedViewModel.countries.count) { index in
+//                            Text(self.feedViewModel.country(for: index))
+//                                .tag(index)
+//
+//                        }
+//                    }.pickerStyle(SegmentedPickerStyle())
+//                        .fixedSize(horizontal: true, vertical: false)
+//                        .padding(.leading, 20)
+//
+//                    Spacer()
+//                }
                 
-                Spacer()
+                
+//                Spacer()
                 
                 //2- loading message
-                if self.feedViewModel.isStatusMessageShown {
-                    Text(self.feedViewModel.statusMessage)
-                        .font(.footnote)
-                }
+//                if self.feedViewModel.isStatusMessageShown {
+//                    Text(self.feedViewModel.statusMessage)
+//                        .font(.footnote)
+//                }
                 
-                Spacer()
+//                Spacer()
                 
                 //3- category picker
-                Picker(selection: $feedViewModel.currentCategory, label: Text("Category")) {
-                    ForEach(0..<self.feedViewModel.categories.count) { index in
-                        Text(self.feedViewModel.categories[index]).tag(index)
-                    }
-                }.pickerStyle(SegmentedPickerStyle())
+//                Picker(selection: $feedViewModel.currentCategory, label: Text("Category")) {
+//                    ForEach(0..<self.feedViewModel.categories.count) { index in
+//                        Text(self.feedViewModel.categories[index]).tag(index)
+//                    }
+//                }.pickerStyle(SegmentedPickerStyle())
                 
-                Spacer(minLength: 20)
+//                Spacer(minLength: 20)
+                
+                //4a- the GeometryReader is used to grab the size of the parent VStack...
                 GeometryReader { geometry in
+                    
                     RefreshableScrollView(refreshing: self.$feedViewModel.isLoading) {
                         //4- list filtered by category and country
-                
                         
-                            
+                        //note, not using filteredCount
+                        if self.feedViewModel.totalFeedLength == 0 {
+                            Text("Sorry, no results.")
+                        } else {
+
                         FilteredList(predicate: self.feedViewModel.predicate) { (idx, article: Article, count) in
                             
-                            VStack {
+                            VStack(spacing: 0) {
                                 //navigation link
                                 NavigationLink(destination: ArticleView(articleViewModel: self.feedViewModel.articleViewModel(at: idx, article: article))) {
                                     
@@ -85,40 +102,56 @@ struct FeedView: View {
                                         
                                         self.feedViewModel.loadImage(for: article, at: idx)
                                     })
+                                    
                             }
                         }
                         .alert(isPresented: self.$feedViewModel.isErrorShown, content: { () -> Alert in
                             //if there's a fetching error, bubble it up
                             Alert(title: Text("Error"), message: Text(self.feedViewModel.errorMessage))
                         })
-                            .padding(-20)
-                            .frame(height: geometry.size.height - 20, alignment: .top)
+//                            .padding(-20)
+                            
+                            //4b- and set the height of the list, because in this case
+                            //the RefreshableScrollView prevents the FilteredList from
+                            //filling the VStack as usual.
+                            .frame(height: geometry.size.height, alignment: .top)
+                        }
                         
                     }
+                    
                 }
             }
+        .onAppear(perform: {
+            if self.userAuth.recentlyClearedCache {
+                self.feedViewModel.resetFilter()
+                self.userAuth.recentlyClearedCache = false
+            }
+        })
             .navigationBarTitle(Text("Top Headlines"))
             .navigationBarItems(
                 trailing:
                 
                 HStack {
                     Button(action: {
-                        self.feedViewModel.loadArticlesWithCategoryAndCountry()
+//                        self.feedViewModel.loadArticlesWithCategoryAndCountry()
+                        self.feedViewModel.showCountryOptions = true
                     }, label: {
-                        Image(systemName: "arrow.clockwise")
-                            .foregroundColor(.green)
+                        Text("\(self.feedViewModel.currentCountryFlag)")
                     })
+                        .actionSheet(isPresented: self.$feedViewModel.showCountryOptions, content: { countryActionSheet() })
                     
                     Spacer(minLength: 30)
                     
                     Button(action: {
-                        self.feedViewModel.deleteAllArticles()
+//                        self.feedViewModel.deleteAllArticles()
+                        self.feedViewModel.showCategoryOptions = true
                     }, label: {
-                        Image(systemName: "trash")
-                            .foregroundColor(.red)
+                        Text("\(self.feedViewModel.currentCategoryIcon)")
                     })
+                    .actionSheet(isPresented: self.$feedViewModel.showCategoryOptions, content: { categoryActionSheet() })
                 }
             )
+//            .background(Color.green)
         }
     }
 }
@@ -129,7 +162,38 @@ struct FeedView_Previews: PreviewProvider {
         
         return FeedView()
             .environment(\.managedObjectContext, CoreDataStack.shared.persistentContainer.viewContext)
+        .environmentObject(UserSettings())
     }
 }
 #endif
 
+extension FeedView {
+    
+    func categoryActionSheet() -> ActionSheet {
+        return ActionSheet(title: Text("Select category..."), buttons:
+            self.feedViewModel.categories.map { actionSheetButton(withCategory: $0)} + [.destructive(Text("Cancel"))]
+        )
+    }
+    
+    func actionSheetButton(withCategory category: String) -> ActionSheet.Button {
+        return ActionSheet.Button.default(Text(self.feedViewModel.categoryNamePrettyPrinted(name: category)), action: {
+            self.feedViewModel.setCategory(category)
+        })
+    }
+    
+    func countryActionSheet() -> ActionSheet {
+        return ActionSheet(title: Text("Select country..."), buttons:
+            self.feedViewModel.countries.map { actionSheetButton(withCountry: $0)} + [.destructive(Text("Cancel"))]
+        )
+    }
+    
+    func actionSheetButton(withCountry country: String) -> ActionSheet.Button {
+        return ActionSheet.Button.default(Text(self.feedViewModel.countryNamePrettyPrinted(iso: country)), action: {
+            self.feedViewModel.setCountry(country)
+            })
+    }
+    
+    func optionalText() -> Text? {
+        return Text("")
+    }
+}

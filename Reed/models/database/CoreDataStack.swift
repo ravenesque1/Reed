@@ -204,7 +204,7 @@ extension CoreDataStack {
     }
     
     ///deletes all articles and saves changes
-    func deleteAllManagedObjectsOfEntityName(_ entityName: String) {
+    func deleteAllManagedObjectsOfEntityName(_ entityName: String, completion: (() -> ())? = nil ) {
         
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entityName)
         let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
@@ -212,6 +212,7 @@ extension CoreDataStack {
         
         do {
             try performDeleteRequest(batchDeleteRequest)
+            completion?()
         } catch {
             print("Error: \(error)\nCould not delete all articles.")
             return
