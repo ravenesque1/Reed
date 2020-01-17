@@ -13,8 +13,25 @@ class FeedViewModel: ReedViewModel {
     //view model for each article
     private var articleViewModels = [Int: ArticleViewModel]()
     
+    
+    @Published var totalFeedLength: Int = 0 {
+        didSet {
+            print("hello")
+        }
+    }
+    
     //true result count for "infinite" scroll
-     @Published var totalFeedLength: Int = 0
+    @Published var totalVisible: Int = 0 {
+        didSet {
+            print("hello")
+        }
+    }
+    
+    @Published var showEnd: Bool = false {
+        willSet {
+            self.objectWillChange.send()
+        }
+    }
     
     //size of each page loaded when scrolling
     var feedPageSize: Int = 20
@@ -24,7 +41,11 @@ class FeedViewModel: ReedViewModel {
     
     //MARK: - Filtering
     
-    @Published var predicate: NSPredicate?
+    @Published var predicate: NSPredicate? {
+        willSet {
+            self.showLoadingMessage = true
+        }
+    }
     @Published var feedNavigationTitle: String = "Top Posts in America"
     @Published var filteredCount: Int = 0
     
@@ -35,6 +56,7 @@ class FeedViewModel: ReedViewModel {
     var categoryFilterValue: String {
         return categories[currentCategory]
     }
+    
     
     var categoryIconDict = ["all": "🌍",
                             "business": "💼",
@@ -116,11 +138,20 @@ class FeedViewModel: ReedViewModel {
     
     override var isLoading: Bool {
         didSet {
-            if oldValue == false && isLoading == true {
+            if oldValue == false && isLoading && !isRefreshingFeed {
                 loadArticlesWithCategoryAndCountry()
+            } else if isRefreshingFeed {
+                isRefreshingFeed = false
+                isLoading = false
             }
         }
     }
+    
+    var showLoadingMessage: Bool = true
+    
+    //don't hit API if feed is just being refreshed,
+    //like from a cache clearing
+    var isRefreshingFeed: Bool = false
     
     override init() {
         super.init()
@@ -147,8 +178,12 @@ extension FeedViewModel {
     }
     
     func loadMoreArticlesWithCategoryAndCountry() {
-        incrementPage()
-        loadArticlesWithCategoryAndCountry()
+        
+        let pageIncremented = tryIncrementPage()
+        
+        if pageIncremented {
+            loadArticlesWithCategoryAndCountry()
+        }
     }
     
     func country(for idx: Int) -> String {
@@ -172,14 +207,26 @@ extension FeedViewModel {
         }
     }
     
-    private func incrementPage() {
+    private func tryIncrementPage() -> Bool {
+        
         let maxDisplayableArticleCount = feedPage * feedPageSize
         
         guard maxDisplayableArticleCount < totalFeedLength else {
-            return
+            return false
         }
         
         feedPage += 1
+        return true
+    }
+    
+    func canIncrementPage() -> Bool {
+        let maxDisplayableArticleCount = feedPage * feedPageSize
+        
+        guard maxDisplayableArticleCount < totalFeedLength else {
+            return false
+        }
+        
+        return true
     }
     
     private func categoryForRequest() -> String {
@@ -233,7 +280,11 @@ extension FeedViewModel {
             self.statusMessage = "loading headlines..."
             self.isStatusMessageShown = true
             self.filteredCount = 0
+            self.showLoadingMessage = true
         }
+        
+        print(">>> loading page \(self.feedPage)")
+        print("\n\n\npredicate: \(predicate.debugDescription)\n\n\n")
         
         let topHeadlines = NewsWebService.topHeadlines(query: query,
                                                        page: self.feedPage,
@@ -243,6 +294,7 @@ extension FeedViewModel {
                 
                 self.isStatusMessageShown = false
                 self.isLoading = false
+                self.showLoadingMessage = false
                 
                 switch completion {
                 case .finished:
@@ -253,6 +305,9 @@ extension FeedViewModel {
                     self.isErrorShown = true
                 }
             }, receiveValue: { response in
+                
+                print(">>> total results: \(response.totalResults)")
+                print(">>> received: \(response.articles.count)")
                 
                 response.articles.forEach{ maybeArticle in
                     
@@ -271,7 +326,7 @@ extension FeedViewModel {
                     }
                     
                 }
-                CoreDataStack.shared.silentSafeSync(items: response.articles)
+                self.totalVisible = CoreDataStack.shared.safeSync(items: response.articles).1
                 self.totalFeedLength = response.totalResults
             })
         
@@ -283,13 +338,14 @@ extension FeedViewModel {
 
 extension FeedViewModel {
     
-    func deleteAllArticles() {
-        CoreDataStack.shared.deleteAllManagedObjectsOfEntityName("Article")
-        
-        resetFilter()
-    }
+//    func deleteAllArticles() {
+//        CoreDataStack.shared.deleteAllManagedObjectsOfEntityName("Article")
+//
+//        resetFilter()
+//    }
     
     func resetFilter() {
+        
         //remove all view models for the cells
         articleViewModels.removeAll()
         
@@ -301,7 +357,16 @@ extension FeedViewModel {
         
         filteredCount = 0
     }
+    
+    
+    func refreshFeed() {
+        isRefreshingFeed = true
+        resetFilter()
+        isLoading = true
+    }
 }
+
+
 
 //MARK: - Filter Management
 extension FeedViewModel {

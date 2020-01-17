@@ -17,11 +17,12 @@ class SettingsViewModel: ReedViewModel {
         }
     }
     
-    func deleteAllArticles() {
+    func deleteAllArticles(completion: @escaping () -> ()) {
         self.deleting = true
         //TODO: Don't let user leave until all is deleted
         CoreDataStack.shared.deleteAllManagedObjectsOfEntityName("Article") {
             self.deleting = false
+            completion()
         }
     }
 }

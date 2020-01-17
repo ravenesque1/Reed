@@ -71,10 +71,26 @@ struct FeedView: View {
                         
                         //note, not using filteredCount
                         if self.feedViewModel.totalFeedLength == 0 {
-                            Text("Sorry, no results.")
+                            
+                            Spacer()
+                            VStack(spacing: 10) {
+                            if self.feedViewModel.showLoadingMessage {
+                                Text("Loading articles...")
+                            } else {
+                                Text("Sorry, no results.")
+                                Text("Pull to refresh or try a different country or category.")
+                                    .font(.footnote)
+                                .foregroundColor(Color.gray)
+                            }
+                            }.frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, idealHeight: geometry.size.height - 20, maxHeight: .infinity)
+                            
+                            
+                            Spacer()
                         } else {
 
                         FilteredList(predicate: self.feedViewModel.predicate) { (idx, article: Article, count) in
+                            
+                            VStack {
                             
                             VStack(spacing: 0) {
                                 //navigation link
@@ -92,38 +108,56 @@ struct FeedView: View {
                                     //1- when the cell/navigation link is visible...
                                     .onAppear(perform: {
                                         
+                                        if idx == count - 1 {
+                                            print(">>>REFRESH")
+                                        } else {
+                                            print(">>>no refresh. at cell \(idx), need \(count - 1) and total feed length is \(self.feedViewModel.totalFeedLength)")
+                                        }
+                                        
                                         self.feedViewModel.filteredCount = count
                                         
                                         //2-...load more items if end of list is reached
-                                        if idx == count - 1 {
+                                        if idx == count - 1 && !self.feedViewModel.isLoading {
                                             print("Info: Loading more headlines")
+                                            
+                                            print(">>>total showing: \(count)")
                                             self.feedViewModel.loadMoreArticlesWithCategoryAndCountry()
+                                        } else {
+                                            self.feedViewModel.showEnd = true
                                         }
                                         
                                         self.feedViewModel.loadImage(for: article, at: idx)
                                     })
                                     
                             }
+                                if idx == count - 1 && self.feedViewModel.showEnd && !self.feedViewModel.canIncrementPage() {
+                                    Spacer()
+                                        
+                                    Text("That's it! You've reached the end.")
+                                    Text("🥳")
+                                        
+                                    Spacer()
+                                }
+                                
+                            }
                         }
                         .alert(isPresented: self.$feedViewModel.isErrorShown, content: { () -> Alert in
                             //if there's a fetching error, bubble it up
                             Alert(title: Text("Error"), message: Text(self.feedViewModel.errorMessage))
                         })
-//                            .padding(-20)
                             
                             //4b- and set the height of the list, because in this case
                             //the RefreshableScrollView prevents the FilteredList from
                             //filling the VStack as usual.
                             .frame(height: geometry.size.height, alignment: .top)
                         }
-                        
                     }
                     
                 }
             }
         .onAppear(perform: {
             if self.userAuth.recentlyClearedCache {
-                self.feedViewModel.resetFilter()
+                self.feedViewModel.refreshFeed()
                 self.userAuth.recentlyClearedCache = false
             }
         })

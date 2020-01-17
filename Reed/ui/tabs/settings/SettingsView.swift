@@ -41,7 +41,10 @@ struct SettingsView: View {
                         message: Text("This will remove all articles. This action cannot be interrupted or undone."),
                         primaryButton: .cancel(),
                         secondaryButton: .destructive(Text("Remove All Articles"), action: {
-                                self.settingsViewModel.deleteAllArticles()
+                            self.settingsViewModel.deleteAllArticles() {
+                                self.userAuth.recentlyClearedCache = true
+                            }
+                    
                               }))
                     }
                     
@@ -50,7 +53,7 @@ struct SettingsView: View {
                                                   title: "logout",
                                                   inverted: true,
                                                   action: {
-                                                   self.userAuth.isLoggedIn = false
+                                                   self.userAuth.logout()
                                        })
                     
                     Spacer()

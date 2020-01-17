@@ -25,7 +25,7 @@ struct OnboardingView: View {
                         title: "login",
                         inverted: true,
                         action: {
-                            self.userAuth.isLoggedIn = true
+                            self.userAuth.login()
                     })
                     
                     ReedButton(
