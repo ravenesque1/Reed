@@ -60,7 +60,6 @@ struct FeedView: View {
                                     //4a the article item itself vs....
                                     VStack(spacing: 0) {
                                         
-                                        //navigation link
                                         NavigationLink(destination: ArticleView(articleViewModel: self.feedViewModel.articleViewModel(at: idx, article: article))) {
                                             
                                             //ordinarily, the "tap here!" struct would go here, but the
@@ -72,10 +71,10 @@ struct FeedView: View {
                                         
                                         FeedCell(articleViewModel: self.feedViewModel.articleViewModel(at: idx, article: article))
                                             
-                                            //6a- when the cell/navigation link is visible...
+                                            //5a- when the cell/navigation link is visible...
                                             .onAppear(perform: {
                                                 
-                                                //6b-...load more items if end of list is reached
+                                                //5b-...load more items if end of list is reached
                                                 if idx == count - 1 && !self.feedViewModel.isLoading {
                                                     self.feedViewModel.loadMoreArticlesWithCategoryAndCountry()
                                                 } else {
@@ -84,6 +83,7 @@ struct FeedView: View {
                                                 
                                                 self.feedViewModel.loadImage(for: article, at: idx)
                                             })
+                                            
                                     }
                                     
                                     //4b- ...the end of view message
@@ -123,7 +123,7 @@ struct FeedView: View {
                         }, label: {
                             Text("\(self.feedViewModel.currentCountryFlag)")
                         })
-                            .actionSheet(isPresented: self.$feedViewModel.showCountryOptions, content: { countryActionSheet() })
+                            .popSheet(isPresented: self.$feedViewModel.showCountryOptions, content: { self.countryActionSheet() })
                         
                         Spacer(minLength: 30)
                         
@@ -133,10 +133,14 @@ struct FeedView: View {
                         }, label: {
                             Text("\(self.feedViewModel.currentCategoryIcon)")
                         })
-                            .actionSheet(isPresented: self.$feedViewModel.showCategoryOptions, content: { categoryActionSheet() })
+                            .popSheet(isPresented: self.$feedViewModel.showCategoryOptions, content: { self.categoryActionSheet() })
                     }
             )
+            
+            Text("<<< Swipe right from the left edge to expose the feed.")
+            .padding()
         }
+//        .navigationViewStyle(StackNavigationViewStyle())
     }
 }
 
@@ -166,27 +170,27 @@ extension FeedView {
     
     //MARK: Category Filtering UI
     
-    func categoryActionSheet() -> ActionSheet {
-        return ActionSheet(title: Text("Select category..."), buttons:
+    func categoryActionSheet() -> PopSheet {
+        return PopSheet(title: Text("Select category..."), buttons:
             self.feedViewModel.categories.map { actionSheetButton(withCategory: $0)} + [.destructive(Text("Cancel"))]
         )
     }
     
-    func actionSheetButton(withCategory category: String) -> ActionSheet.Button {
-        return ActionSheet.Button.default(Text(self.feedViewModel.categoryNamePrettyPrinted(name: category)), action: {
+    func actionSheetButton(withCategory category: String) -> PopSheet.Button {
+        return PopSheet.Button.default(Text(self.feedViewModel.categoryNamePrettyPrinted(name: category)), action: {
             self.feedViewModel.setCategory(category)
         })
     }
     
     //MARK: Country Filtering UI
-    func countryActionSheet() -> ActionSheet {
-        return ActionSheet(title: Text("Select country..."), buttons:
+    func countryActionSheet() -> PopSheet {
+        return PopSheet(title: Text("Select country..."), buttons:
             self.feedViewModel.countries.map { actionSheetButton(withCountry: $0)} + [.destructive(Text("Cancel"))]
         )
     }
     
-    func actionSheetButton(withCountry country: String) -> ActionSheet.Button {
-        return ActionSheet.Button.default(Text(self.feedViewModel.countryNamePrettyPrinted(iso: country)), action: {
+    func actionSheetButton(withCountry country: String) -> PopSheet.Button {
+        return PopSheet.Button.default(Text(self.feedViewModel.countryNamePrettyPrinted(iso: country)), action: {
             self.feedViewModel.setCountry(country)
         })
     }

@@ -15,8 +15,8 @@ struct OnboardingView: View {
     
     var body: some View {
         
-        ReedHiddenNavBarView {
-            NavigationView {
+//        ReedHiddenNavBarView {
+//            NavigationView {
                 VStack(spacing: 10.0) {
                     Text("welcome, this is onboarding")
                     
@@ -36,8 +36,8 @@ struct OnboardingView: View {
                     })
                 }
                 .padding()
-            }
-        }
+//            }
+//        }
     }
 }
 

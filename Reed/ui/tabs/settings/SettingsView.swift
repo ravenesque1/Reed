@@ -16,35 +16,34 @@ struct SettingsView: View {
     
     
     var body: some View {
-        ReedHiddenNavBarView {
-            VStack {
+        VStack {
+            
+            VStack(spacing: 10.0) {
                 
-                VStack(spacing: 10.0) {
-                
-                    //TODO: determine if NavigationBar should be hidden and
-                    //thus if the title needs to be displayed like this
-                    HStack {
-                        Text("Settings")
-                            .font(.largeTitle)
-                            .fontWeight(.bold)
-                        Spacer()
-                    }
-                    
-                    Spacer()
-                    
-                    clearCacheButton()
-                     .alert(isPresented: self.$settingsViewModel.showDeleteConfirmation, content: clearCacheAlert)
-                    
-                    logoutButton()
-                    
+                //TODO: determine if NavigationBar should be hidden and
+                //thus if the title needs to be displayed like this
+                HStack {
+                    Text("Settings")
+                        .font(.largeTitle)
+                        .fontWeight(.bold)
                     Spacer()
                 }
-                .padding(.init(top: 20.0, leading: 0.0, bottom: 0.0, trailing: 0.0))
+                
+                Spacer()
+                
+                clearCacheButton()
+                    .alert(isPresented: self.$settingsViewModel.showDeleteConfirmation, content: clearCacheAlert)
+                
+                logoutButton()
                 
                 Spacer()
             }
-            .padding()
+            .padding(.init(top: 20.0, leading: 0.0, bottom: 0.0, trailing: 0.0))
+            
+            Spacer()
         }
+        .padding()
+        .navigationBarTitle(Text("Settings"))
     }
 }
 
@@ -61,25 +60,25 @@ extension SettingsView {
     
     private func clearCacheButton() -> ReedButton {
         return ReedButton(color: .red,
-                   title: "clear cache",
-                   action: {
-                    self.settingsViewModel.showDeleteConfirmation = true
+                          title: "clear cache",
+                          action: {
+                            self.settingsViewModel.showDeleteConfirmation = true
         })
     }
     
     private func logoutButton() -> ReedButton {
         return  ReedButton(color: .red,
-                                      title: "logout",
-                                      inverted: true,
-                                      action: {
-                                       self.userAuth.logout()
-                           })
-                           
+                           title: "logout",
+                           inverted: true,
+                           action: {
+                            self.userAuth.logout()
+        })
+        
     }
     
     private func clearCacheAlert() -> Alert {
         return Alert(title: Text("Are you sure you want to clear the cache?"),
-                     message: Text("This will remove all articles. This action cannot be interrupted or undone."),
+                     message: Text("This will remove all articles. This action cannot be undone."),
                      primaryButton: .cancel(),
                      secondaryButton: .destructive(Text("Remove All Articles"), action: {
                         self.settingsViewModel.deleteAllArticles() {

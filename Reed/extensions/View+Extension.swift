@@ -12,9 +12,9 @@ extension View {
     var any: AnyView {
         return AnyView(self)
     }
-
+    
     func align(_ inset: Alignment) -> some View {
-       return self
+        return self
             .frame(maxWidth: .infinity, alignment: inset)
     }
     
@@ -37,6 +37,17 @@ extension View {
                            endPoint: .bottom)
                 .mask(self
             )
+        }
+    }
+    
+    ///presents a Popover or an ActionSheet depending on the userInterface
+    func popSheet(isPresented: Binding<Bool>, arrowEdge: Edge = .trailing, content: @escaping () -> PopSheet) -> some View {
+        Group {
+            if UIDevice.current.userInterfaceIdiom == .pad {
+                popover(isPresented: isPresented, attachmentAnchor: .rect(.bounds), arrowEdge: arrowEdge, content: { content().popover(isPresented: isPresented) })
+            } else {
+                actionSheet(isPresented: isPresented, content: { content().actionSheet() })
+            }
         }
     }
 }
